@@ -1,0 +1,14 @@
+.ant-form-vertical {
+  .ant-form-item-label {
+    padding-bottom: 0.375rem;
+
+    label {
+      height: auto !important;
+      font-weight: 500;
+    }
+  }
+
+  .ant-form-item-explain {
+    font-size: 13px;
+  }
+}

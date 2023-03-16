@@ -1,0 +1,36 @@
+.ant-layout {
+  .ant-layout-sider {
+    &.ant-layout-sider-light,
+    .ant-layout-sider-trigger {
+      background: #F4F6F8;
+    }
+  }
+
+  // menu
+  .ant-menu {
+    $size: 16px;
+
+    background: transparent;
+    border: 0 !important;
+
+    .ant-menu-item {
+      width: 100%;
+      height: $size * 3;
+      margin: 0;
+      font-size: $size;
+      line-height: $size * 3;
+
+      .anticon {
+        min-width: $size;
+        font-size: $size;
+      }
+    }
+
+    &[class*="-collapsed"] {
+      .ant-menu-item {
+        padding-left: $size - 4px;
+        padding-right: $size - 4px;
+      }
+    }
+  }
+}
