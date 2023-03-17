@@ -1,14 +1,16 @@
-import './styles.scss';
+import styles from './styles.module.scss';
 import { HTMLAttributes } from 'react';
 import { Button, Card } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { ComposeEmailForm } from './ComposeEmailForm';
+import { ComposeEmailFormData } from './meta';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   close: () => void;
+  send: (data: ComposeEmailFormData) => void;
 }
 
-export const ComposeEmail = ({ close, ...props }: Props) => {
+export const ComposeEmail = ({ close, send, ...props }: Props) => {
   const { className, ...restProps } = props;
 
   const closeButton = (
@@ -23,13 +25,13 @@ export const ComposeEmail = ({ close, ...props }: Props) => {
   return (
     <Card
       {...restProps}
-      className={`${className} compose-email__container`}
+      className={`${className} ${styles.container}`}
       bordered={false}
       size="small"
       title="New Message"
       extra={closeButton}
     >
-      <ComposeEmailForm />
+      <ComposeEmailForm send={send}/>
     </Card>
   );
 };

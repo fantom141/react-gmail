@@ -1,0 +1,26 @@
+.container {
+  width: 37rem;
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px !important;
+}
+
+.form {
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &Control {
+    padding-left: 0;
+    padding-right: 0;
+
+    &Subject {
+      font-weight: 600;
+    }
+
+    &Message {
+      height: 26rem !important;
+      resize: none !important;
+    }
+  }
+}

@@ -30,6 +30,7 @@ export function App() {
           colorBgContainer: '#fefefe',
           colorBgElevated: '#fefefe',
           colorBgLayout: '#fefefe',
+          colorBorderSecondary: '#e9e9e9',
         },
       }}
       componentSize="large"
