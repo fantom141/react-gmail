@@ -9,12 +9,12 @@ const injectedRtkApi = api.injectEndpoints({
           page: queryArg.page,
           size: queryArg.size,
           sort: queryArg.sort,
+          senderEmail: queryArg.senderEmail,
+          recipientEmail: queryArg.recipientEmail,
           isFavourite: queryArg.isFavourite,
           isSpam: queryArg.isSpam,
           isRead: queryArg.isRead,
           isTrash: queryArg.isTrash,
-          senderEmail: queryArg.senderEmail,
-          recipientEmail: queryArg.recipientEmail,
           threadId: queryArg.threadId,
           createdDateFrom: queryArg.createdDateFrom,
           createdDateTo: queryArg.createdDateTo,
@@ -30,7 +30,14 @@ const injectedRtkApi = api.injectEndpoints({
     messageControllerGetCount: build.query<MessageControllerGetCountApiResponse, MessageControllerGetCountApiArg>({
       query: queryArg => ({
         url: `/messages/count`,
-        params: { isFavourite: queryArg.isFavourite, isSpam: queryArg.isSpam, isRead: queryArg.isRead, isTrash: queryArg.isTrash },
+        params: {
+          senderEmail: queryArg.senderEmail,
+          recipientEmail: queryArg.recipientEmail,
+          isFavourite: queryArg.isFavourite,
+          isSpam: queryArg.isSpam,
+          isRead: queryArg.isRead,
+          isTrash: queryArg.isTrash,
+        },
       }),
     }),
     messageControllerManagePreferences: build.mutation<
@@ -50,12 +57,12 @@ export type MessageControllerGetMessagesApiArg = {
   /** "-1" to get all */
   size?: number;
   sort?: string[];
+  senderEmail?: string;
+  recipientEmail?: string;
   isFavourite?: boolean;
   isSpam?: boolean;
   isRead?: boolean;
   isTrash?: boolean;
-  senderEmail?: string;
-  recipientEmail?: string;
   threadId?: number;
   createdDateFrom?: string;
   createdDateTo?: string;
@@ -70,6 +77,8 @@ export type MessageControllerDeleteMessageApiArg = {
 };
 export type MessageControllerGetCountApiResponse = /** status 200  */ number;
 export type MessageControllerGetCountApiArg = {
+  senderEmail?: string;
+  recipientEmail?: string;
   isFavourite?: boolean;
   isSpam?: boolean;
   isRead?: boolean;
@@ -117,6 +126,8 @@ export type CreateMessageDto = {
   threadId?: number;
 };
 export type MessagePreferencesDto = {
+  senderEmail?: string;
+  recipientEmail?: string;
   isFavourite?: boolean;
   isSpam?: boolean;
   isRead?: boolean;

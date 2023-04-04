@@ -1,0 +1,22 @@
+@mixin marginLeft($value) {
+  margin-left: #{$value}px;
+  transition: margin-left 0.2s;
+}
+
+.collapsed {
+  @include marginLeft(48);
+}
+
+.expanded {
+  @include marginLeft(280);
+}
+
+.content {
+  min-height: 100vh;
+}
+
+.composeEmail {
+  position: fixed;
+  right: 4rem;
+  bottom: 1rem;
+}

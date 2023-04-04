@@ -1,31 +1,35 @@
-import styles from './styles.module.scss';
+import styles from './ComposeEmail.module.scss';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Divider, Input, Row, theme } from 'antd';
-import { ComposeEmailFormData, composeEmailFormValidationSchema } from './meta';
+import { Button, Divider, Input, Row, Space, theme } from 'antd';
+import { ComposeEmailFormData, composeEmailFormValidationSchema, SaveAsDraftFormData } from './meta';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ComposeEmailFormControlError } from './ComposeEmailFormControlError';
 
 const { useToken } = theme;
 const { TextArea } = Input;
+const { Compact } = Space;
 
 interface Props {
-  send: (data: ComposeEmailFormData) => void
+  send: (data: ComposeEmailFormData) => void;
+  saveAsDraft: (data: SaveAsDraftFormData) => void;
+  sendIsLoading: boolean;
+  saveAsDraftIsLoading: boolean;
 }
 
-export const ComposeEmailForm = ({send}: Props) => {
+export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraftIsLoading }: Props) => {
   const {
     token: { colorErrorBg },
   } = useToken();
 
-  const { control, handleSubmit } = useForm<ComposeEmailFormData>({
+  const { control, handleSubmit, getValues } = useForm<ComposeEmailFormData>({
     mode: 'onBlur',
     resolver: yupResolver(composeEmailFormValidationSchema),
   });
 
   const onSubmit = (data: ComposeEmailFormData) => {
     console.log(data);
-    send(data)
+    send(data);
   };
 
   const divider = (
@@ -39,6 +43,7 @@ export const ComposeEmailForm = ({send}: Props) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={styles.formContent}
+      autoComplete="none"
     >
       <Controller
         name="email"
@@ -89,13 +94,27 @@ export const ComposeEmailForm = ({send}: Props) => {
       {divider}
 
       <Row justify="end">
-        <Button
-          type="primary"
-          size="middle"
-          htmlType="submit"
-        >
-          Send
-        </Button>
+        <Compact>
+          <Button
+            type="text"
+            size="middle"
+            htmlType="button"
+            loading={saveAsDraftIsLoading}
+            disabled={sendIsLoading}
+            onClick={() => saveAsDraft(getValues())}
+          >
+            Save as draft
+          </Button>
+          <Button
+            type="primary"
+            size="middle"
+            htmlType="submit"
+            loading={sendIsLoading}
+            disabled={saveAsDraftIsLoading}
+          >
+            Send
+          </Button>
+        </Compact>
       </Row>
     </form>
   );

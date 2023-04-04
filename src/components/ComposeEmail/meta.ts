@@ -6,4 +6,10 @@ export const composeEmailFormValidationSchema = object({
   content: string().required('Required field'),
 });
 
-export type ComposeEmailFormData = InferType<typeof composeEmailFormValidationSchema>;
+// export type ComposeEmailFormData = InferType<typeof composeEmailFormValidationSchema>;
+export type ComposeEmailFormData = {
+  email: string;
+  subject?: string;
+  content: string;
+};
+export type SaveAsDraftFormData = Partial<ComposeEmailFormData>;

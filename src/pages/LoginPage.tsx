@@ -1,6 +1,6 @@
 import { Col, Row, Typography } from 'antd';
 import mailbox from '@/assets/mailbox.svg';
-import { LoginForm } from '@/components';
+import { LoginForm } from '@/components/LoginForm';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 

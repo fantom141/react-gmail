@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, authTokenSelector, syncAuthState } from '@/store';
-import { AppLoading } from '@/components';
+import { AppLoading } from '@/components/AppLoading';
 
 export const AuthTokenInitializer = ({ children }: PropsWithChildren) => {
   const dispatch = useDispatch<AppDispatch>();

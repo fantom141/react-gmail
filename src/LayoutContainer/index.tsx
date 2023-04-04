@@ -1,9 +1,9 @@
-import './styles.scss';
+import styles from './LayoutContainer.module.scss';
 import { Layout } from 'antd';
 import React, { useState } from 'react';
 import { LayoutRoutes } from './LayoutRoutes';
-import { LayoutSider } from './sider/LayoutSider';
-import { ComposeEmail, ComposeEmailFormData } from '@/components';
+import { LayoutSider } from './LayoutSider';
+import { ComposeEmail } from '@/components/ComposeEmail';
 import { AuthTokenInitializer } from './AuthTokenInitializer';
 
 const { Content } = Layout;
@@ -11,10 +11,6 @@ const { Content } = Layout;
 export const LayoutContainer = () => {
   const [siderCollapsed, setSiderCollapsed] = useState(false);
   const [composeEmailOpened, setComposeEmailOpened] = useState(false);
-
-  const send = (data: ComposeEmailFormData) => {
-    console.log(data);
-  };
 
   return (
     <AuthTokenInitializer>
@@ -25,16 +21,15 @@ export const LayoutContainer = () => {
           compose={() => setComposeEmailOpened(true)}
         />
 
-        <Layout className={siderCollapsed ? 'layout-container--collapsed' : 'layout-container--expanded'}>
-          <Content className="layout-container__content">
+        <Layout className={siderCollapsed ? styles.collapsed : styles.expanded}>
+          <Content className={styles.content}>
             <LayoutRoutes />
           </Content>
 
           {composeEmailOpened && (
             <ComposeEmail
-              className="layout-container__compose-email"
+              className={styles.composeEmail}
               close={() => setComposeEmailOpened(false)}
-              send={send}
             />
           )}
         </Layout>

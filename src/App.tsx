@@ -2,12 +2,12 @@ import React, { PropsWithChildren } from 'react';
 import { AuthContext, AuthContextProvider } from '@/context/AuthContext';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { User } from 'firebase/auth';
-import { LayoutContainer } from './layout';
+import { LayoutContainer } from './LayoutContainer';
 import { LoginPage } from './pages/LoginPage';
 import { ConfigProvider } from 'antd';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
-import { AppLoading } from '@/components/app-loading';
+import { AppLoading } from '@/components/AppLoading';
 
 const ProtectedRoutes = ({ user }: PropsWithChildren<{ user: User }>) => {
   return user ? <Outlet /> : <Navigate to="/login" />;

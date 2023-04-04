@@ -1,8 +1,8 @@
-import './styles.scss';
+import styles from './LayoutSider.module.scss';
 import { Button, Layout, Space } from 'antd';
 import { CaretLeftOutlined, CaretRightOutlined, PlusOutlined } from '@ant-design/icons';
 import { UserInfo } from './UserInfo';
-import { SiderMenu } from './SiderMenu';
+import { SiderMenu } from '../SiderMenu';
 import React from 'react';
 
 const { Sider } = Layout;
@@ -22,15 +22,15 @@ export const LayoutSider = ({ collapsed, collapsedChange, compose }: Props) => {
       collapsedWidth="48"
       width="280"
       theme="light"
-      className="layout-sider"
+      className={styles.root}
     >
-      <div className={`layout-sider__content ${collapsed ? 'collapsed' : ''}`}>
+      <div className={`${styles.content} ${collapsed ? styles.collapsed : ''}`}>
         <Button
           size="small"
           type="text"
           icon={collapsed ? <CaretRightOutlined /> : <CaretLeftOutlined />}
           onClick={() => collapsedChange()}
-          className="layout-sider__toggler"
+          className={styles.toggler}
         />
 
         <Space

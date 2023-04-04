@@ -41,10 +41,10 @@ export const UserInfo = ({ collapsed }: Props) => {
             style={{ marginBottom: 0 }}
             ellipsis
           >
-            {user.displayName || 'No display name'}
+            {user?.displayName || 'No display name'}
           </Title>
 
-          <Text type="secondary">{user.email}</Text>
+          <Text type="secondary">{user?.email}</Text>
         </Space>
 
         <Logout />
