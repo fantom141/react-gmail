@@ -7,7 +7,7 @@ import { ComposeEmailFormData, SaveAsDraftFormData } from './meta';
 import { enhancedApi as messageApi, useMessageControllerCreateMessageMutation } from '@/store/api/message-api';
 import { useDraftControllerCreateDraftMutation } from '@/store/api/draft-api';
 import { useDispatch } from 'react-redux';
-import { getDraftCountStoreQueryArgs, getSentCountStoreQueryArgs } from '@/utils';
+import { getDraftsCountStoreQueryArgs, getSentCountStoreQueryArgs } from '@/utils';
 import { AuthContext } from '@/context/AuthContext';
 import { AppDispatch } from '@/store';
 import { enhancedApi as draftApi } from '@/store/api/draft-api';
@@ -38,7 +38,7 @@ export const ComposeEmail = ({ close, ...props }: Props) => {
   const saveAsDraft = async (data: SaveAsDraftFormData) => {
     try {
       await saveMessageAsDraft({ upsertDraftDto: data }).unwrap();
-      await dispatch(draftApi.util.prefetch('draftControllerGetCount', getDraftCountStoreQueryArgs(), { force: true }));
+      await dispatch(draftApi.util.prefetch('draftControllerGetCount', getDraftsCountStoreQueryArgs(), { force: true }));
       notification.success({ message: 'Successfully saved as draft', placement: 'bottom' });
       close();
     } catch (e) {

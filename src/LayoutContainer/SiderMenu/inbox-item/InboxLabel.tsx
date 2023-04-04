@@ -6,6 +6,7 @@ import { theme } from 'antd';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
+import { getInboxCountStoreQueryArgs, getUnreadCountStoreQueryArgs } from '@/utils';
 
 const { useToken } = theme;
 
@@ -18,33 +19,8 @@ export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
 
   const { user } = useContext(AuthContext);
 
-  const { data: totalCount } = useMessageControllerGetCountQuery({ recipientEmail: user.email });
-  const { data: unreadCount } = useMessageControllerGetCountQuery({ recipientEmail: user.email, isRead: false });
-
-  // return !unreadCount ? (
-  //   <NavLinkContent
-  //     title={title}
-  //     totalCount={totalCount}
-  //   />
-  // ) : (
-  //   <NavLink to={path}>
-  //     <div className={navLinkContentStyles.container}>
-  //       <span>Inbox</span>
-  //
-  //       <div className={`${navLinkContentStyles.counts} ${styles.counts}`}>
-  //         <span>
-  //           <span
-  //             style={{ backgroundColor: colorError, color: colorBgBase, borderRadius }}
-  //             className={styles.unread}
-  //           >
-  //             {unreadCount}
-  //           </span>
-  //         </span>
-  //         <span style={{ color: colorTextQuaternary }}>{totalCount}</span>
-  //       </div>
-  //     </div>
-  //   </NavLink>
-  // );
+  const { data: totalCount } = useMessageControllerGetCountQuery(getInboxCountStoreQueryArgs(user.email));
+  const { data: unreadCount } = useMessageControllerGetCountQuery(getUnreadCountStoreQueryArgs(user.email));
 
   return (
     <NavLink to={path}>
