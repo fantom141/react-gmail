@@ -8,10 +8,13 @@ import { favouritesItem } from './favourites-item';
 import { spamItem } from './spam-item';
 import { trashItem } from './trash-item';
 
-const items: ItemType[] = [inboxItem, sentItem, draftsItem, favouritesItem, spamItem, trashItem];
+interface Props {
+  collapsed: boolean;
+}
 
-export const SiderMenu = () => {
+export const SiderMenu = ({ collapsed }: Props) => {
   const location = useLocation();
+  const items: ItemType[] = [inboxItem(collapsed), sentItem, draftsItem, favouritesItem, spamItem, trashItem];
   const selectedKey = items.find(({ key }) => location.pathname.includes(key as string))?.key as string;
 
   return (

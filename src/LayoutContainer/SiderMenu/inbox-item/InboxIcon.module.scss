@@ -1,0 +1,17 @@
+.withBadge {
+  position: relative;
+  line-height: 52px !important;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: -25%;
+    top: 25%;
+    display: block;
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: red;
+    border: 2px solid transparent;
+    border-radius: 50%;
+  }
+}

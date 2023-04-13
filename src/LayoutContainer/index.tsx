@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { LayoutRoutes } from './LayoutRoutes';
 import { LayoutSider } from './LayoutSider';
 import { ComposeEmail } from '@/components/ComposeEmail';
-import { AuthTokenInitializer } from './AuthTokenInitializer';
+import { AppBodyInitializer } from './AppBodyInitializer';
 
 const { Content } = Layout;
 
@@ -13,7 +13,7 @@ export const LayoutContainer = () => {
   const [composeEmailOpened, setComposeEmailOpened] = useState(false);
 
   return (
-    <AuthTokenInitializer>
+    <AppBodyInitializer>
       <Layout hasSider>
         <LayoutSider
           collapsed={siderCollapsed}
@@ -34,6 +34,6 @@ export const LayoutContainer = () => {
           )}
         </Layout>
       </Layout>
-    </AuthTokenInitializer>
+    </AppBodyInitializer>
   );
 };

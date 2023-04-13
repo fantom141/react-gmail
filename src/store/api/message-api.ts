@@ -135,8 +135,10 @@ export type MessagePreferencesDto = {
 };
 export const {
   useMessageControllerGetMessagesQuery,
+  useLazyMessageControllerGetMessagesQuery,
   useMessageControllerCreateMessageMutation,
   useMessageControllerDeleteMessageMutation,
   useMessageControllerGetCountQuery,
+  useLazyMessageControllerGetCountQuery,
   useMessageControllerManagePreferencesMutation,
 } = injectedRtkApi;

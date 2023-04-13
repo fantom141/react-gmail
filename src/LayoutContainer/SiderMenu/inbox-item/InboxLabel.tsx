@@ -4,7 +4,7 @@ import styles from './InboxLabel.module.scss';
 import { SiderMenuLabelProps } from '../SiderMenu.types';
 import { theme } from 'antd';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { getInboxCountStoreQueryArgs, getUnreadCountStoreQueryArgs } from '@/utils';
 
@@ -12,15 +12,21 @@ const { useToken } = theme;
 
 export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
   const title = 'Inbox';
+  const maxUnreadDisplayed = 99;
 
   const {
-    token: { colorError, colorBgBase, borderRadius, colorTextQuaternary },
+    token: { colorError: unreadColor, colorBgBase, borderRadius, colorTextTertiary: totalColor },
   } = useToken();
 
   const { user } = useContext(AuthContext);
 
   const { data: totalCount } = useMessageControllerGetCountQuery(getInboxCountStoreQueryArgs(user.email));
   const { data: unreadCount } = useMessageControllerGetCountQuery(getUnreadCountStoreQueryArgs(user.email));
+
+  const unreadCountDisplayed = useMemo(
+    () => (unreadCount && unreadCount > maxUnreadDisplayed ? `${maxUnreadDisplayed}+` : unreadCount),
+    [unreadCount]
+  );
 
   return (
     <NavLink to={path}>
@@ -36,13 +42,13 @@ export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
           <div className={`${navLinkContentStyles.counts} ${styles.counts}`}>
             <span>
               <span
-                style={{ backgroundColor: colorError, color: colorBgBase, borderRadius }}
+                style={{ backgroundColor: unreadColor, color: colorBgBase, borderRadius }}
                 className={styles.unread}
               >
-                {unreadCount}
+                {unreadCountDisplayed}
               </span>
             </span>
-            <span style={{ color: colorTextQuaternary }}>{totalCount}</span>
+            <span style={{ color: totalColor }}>{totalCount}</span>
           </div>
         </div>
       )}

@@ -72,8 +72,10 @@ export type UpsertDraftDto = {
 };
 export const {
   useDraftControllerGetDraftsQuery,
+  useLazyDraftControllerGetDraftsQuery,
   useDraftControllerCreateDraftMutation,
   useDraftControllerUpdateDraftMutation,
   useDraftControllerDeleteDraftMutation,
   useDraftControllerGetCountQuery,
+  useLazyDraftControllerGetCountQuery,
 } = injectedRtkApi;

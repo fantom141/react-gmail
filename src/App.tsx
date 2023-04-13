@@ -30,11 +30,22 @@ export function App() {
 
             // map tokens
             colorText: '#686D79', // for Title color set in index.css
+            colorTextBase: '#686D79',
             colorIcon: '#686D79',
             colorBgContainer: '#fefefe',
             colorBgElevated: '#fefefe',
-            colorBgLayout: '#fefefe',
+            colorBgLayout: '#fbfbfb',
             colorBorderSecondary: '#e9e9e9',
+          },
+          components: {
+            Typography: {
+              colorTextDescription: '#686D79A6',
+            },
+            Tooltip: {
+              colorBgDefault: '#686D79',
+              fontSize: 12,
+              sizePopupArrow: 0,
+            },
           },
         }}
         componentSize="large"

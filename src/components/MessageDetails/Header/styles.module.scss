@@ -1,0 +1,40 @@
+.root {
+  display: grid;
+  grid-template-areas:
+          "avatar fullName date"
+          "avatar additionalInfo actions"
+  ;
+  grid-template-columns: max-content 1fr max-content;
+  grid-gap: 0.125rem 0.5rem;
+}
+
+.avatar {
+  grid-area: avatar;
+}
+
+.fullName {
+  grid-area: fullName;
+  margin-bottom: 0 !important;
+}
+
+.date {
+  grid-area: date;
+  font-size: 13px;
+}
+
+.additionalInfo {
+  grid-area: additionalInfo;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 12px;
+
+  &Label {
+
+  }
+}
+
+.actions {
+  grid-area: actions;
+  justify-content: end;
+}

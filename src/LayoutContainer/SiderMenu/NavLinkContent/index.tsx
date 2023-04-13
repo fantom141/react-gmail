@@ -10,14 +10,14 @@ interface Props {
 
 export const NavLinkContent = ({ title, totalCount }: Props) => {
   const {
-    token: { colorTextQuaternary },
+    token: { colorTextTertiary: color },
   } = useToken();
 
   return (
     <div className={styles.container}>
       <span>{title}</span>
 
-      <div className={styles.counts}>{!!totalCount && <span style={{ color: colorTextQuaternary }}>{totalCount}</span>}</div>
+      <div className={styles.counts}>{!!totalCount && <span style={{ color }}>{totalCount}</span>}</div>
     </div>
   );
 };

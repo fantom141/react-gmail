@@ -1,0 +1,61 @@
+.root {
+  :global {
+    .ant-skeleton-input {
+      height: 1.25rem !important;
+      min-width: 4rem !important;
+      width: 100% !important;
+    }
+  }
+}
+
+.header {
+  display: grid;
+  grid-template-areas:
+          "avatar name date"
+          "avatar info actions"
+  ;
+  grid-template-columns: max-content 1fr max-content;
+  grid-gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  grid-area: avatar;
+}
+
+.name {
+  grid-area: name;
+  width: 50% !important;
+}
+
+.date {
+  grid-area: date;
+  width: 8rem !important;
+}
+
+.info {
+  grid-area: info;
+  width: 85% !important;
+}
+
+.actions {
+  grid-area: actions;
+  width: 90% !important;
+  justify-self: end;
+}
+
+.skeleton {
+  :global {
+    .ant-skeleton-title {
+      margin-bottom: 1.5rem;
+      height: 1.75rem !important;
+    }
+
+    .ant-skeleton-paragraph {
+      &,
+      & > li:not(:first-child) {
+        margin-top: 0.75rem !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.root {
+  position: relative;
+  padding: 0 3px;
+  height: 100%;
+
+  &:hover {
+    .separatorActive {
+      opacity: 1;
+    }
+  }
+}
+
+.separator {
+  width: 1px;
+  height: 100%;
+
+  &Active {
+    position: absolute;
+    left: 30%;
+    top: 0;
+    display: block;
+    width: 40%;
+    height: 100%;
+    opacity: 0;
+  }
+}

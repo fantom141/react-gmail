@@ -1,0 +1,12 @@
+.subject {
+  margin-top: 1rem;
+
+  &Empty {
+    color: var(--color-text-quaternary) !important;
+  }
+}
+
+.content {
+  margin-bottom: 0 !important;
+  white-space: break-spaces;
+}

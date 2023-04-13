@@ -1,0 +1,23 @@
+.root {
+  padding: 1.5rem;
+  background-color: var(--color-bg-container);
+}
+
+.skipVerticalIndent {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.skipHorizontalIndent {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.transparent {
+  background: transparent;
+}
+
+.borderRadius {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+}

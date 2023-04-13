@@ -1,0 +1,3 @@
+@mixin fadeInOut($property: opacity) {
+  transition: var(--motion-ease-in-out) var(--motion-duration-slow) #{$property};
+}

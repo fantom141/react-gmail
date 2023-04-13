@@ -1,11 +1,11 @@
-import { MailOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { InboxLabel } from './InboxLabel';
 import { appRoutePath } from '@/utils';
+import { InboxIcon } from './InboxIcon';
 
-export const inboxItem: ItemType = {
+export const inboxItem = (collapsed: boolean): ItemType => ({
   label: <InboxLabel path={appRoutePath.INBOX} />,
   key: appRoutePath.INBOX,
-  icon: <MailOutlined />,
+  icon: <InboxIcon collapsed={collapsed} />,
   title: null,
-};
+});

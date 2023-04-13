@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  gap: 0.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.refresh {
+  margin-left: -0.25rem;
+}
+
+.paginator {
+  margin-left: 1rem;
+
+  :global {
+    .ant-pagination-item-active {
+      &,
+      &:hover {
+        $color: #{var(--color-text)};
+
+        border-color: $color;
+
+        a {
+          color: $color;
+        }
+      }
+    }
+  }
+}

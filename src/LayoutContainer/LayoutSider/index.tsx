@@ -49,7 +49,7 @@ export const LayoutSider = ({ collapsed, collapsedChange, compose }: Props) => {
             {!collapsed ? 'Compose' : ''}
           </Button>
 
-          <SiderMenu />
+          <SiderMenu collapsed={collapsed} />
         </Space>
       </div>
     </Sider>

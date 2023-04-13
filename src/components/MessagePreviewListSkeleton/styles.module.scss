@@ -1,0 +1,19 @@
+.content {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.skeleton {
+  :global {
+    .ant-skeleton-title {
+      margin-bottom: 0;
+    }
+
+    .ant-skeleton-paragraph {
+      &,
+      & > li:not(:first-child) {
+        margin-top: 0.75rem !important;
+      }
+    }
+  }
+}
