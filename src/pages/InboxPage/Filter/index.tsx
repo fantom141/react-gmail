@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { FilterProps, InboxFilterValues } from './types';
 import React, { useRef } from 'react';
 import { FilterSettings } from './FilterSettings';
-import { PageFilter } from '@/components/PageFilter';
+import { PageFilter } from '@/features/PageFilter';
 import { prepareFilterValuesToOutput } from './utils';
 
 export const Filter = ({ change }: FilterProps) => {

@@ -1,4 +1,4 @@
-import { Thread } from '@/components/Thread';
+import { Thread } from '@/features/Thread';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeMessage, openedMessageSelector, openMessage } from '@/store';
 import { SplitPanels } from '@/components/SplitPanels';

@@ -1,3 +1,9 @@
 @mixin fadeInOut($property: opacity) {
   transition: var(--motion-ease-in-out) var(--motion-duration-slow) #{$property};
 }
+
+@mixin ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

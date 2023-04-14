@@ -1,10 +1,10 @@
-import styles from './LayoutContainer.module.scss';
+import styles from './styles.module.scss';
 import { Layout } from 'antd';
 import React, { useState } from 'react';
-import { LayoutRoutes } from './LayoutRoutes';
+import { LayoutRoutes } from './routes';
 import { LayoutSider } from './LayoutSider';
-import { ComposeEmail } from '@/components/ComposeEmail';
-import { AppBodyInitializer } from './AppBodyInitializer';
+import { ComposeEmail } from '@/features/ComposeEmail';
+import { AuthTokenInitializer } from './AuthTokenInitializer';
 
 const { Content } = Layout;
 
@@ -13,7 +13,7 @@ export const LayoutContainer = () => {
   const [composeEmailOpened, setComposeEmailOpened] = useState(false);
 
   return (
-    <AppBodyInitializer>
+    <AuthTokenInitializer>
       <Layout hasSider>
         <LayoutSider
           collapsed={siderCollapsed}
@@ -34,6 +34,6 @@ export const LayoutContainer = () => {
           )}
         </Layout>
       </Layout>
-    </AppBodyInitializer>
+    </AuthTokenInitializer>
   );
 };

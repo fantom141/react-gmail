@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import classnames from 'classnames';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { MessageActions } from '@/components/MessageActions';
+import { MessageActions } from '@/features/MessageActions';
 import { MessagePreviewProps } from './types';
 
 const { Title, Text } = Typography;

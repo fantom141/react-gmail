@@ -1,6 +1,6 @@
 import { Header } from '../Header';
 import { Filter } from '../Filter';
-import { MessageListActions } from '@/components/MessageListActions';
+import { MessageListActions } from '@/features/MessageListActions';
 import { MessageList } from '../MessageList';
 import { LeftPanelProps } from './types';
 import { useContext, useEffect, useMemo } from 'react';

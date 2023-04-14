@@ -2,21 +2,17 @@ import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '@/firebase';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { useState } from 'react';
+import { LoginFormProps, LoginFormValues } from './types';
 
 const { Item } = Form;
 const { Password } = Input;
 
-interface ILoginData {
-  email: string;
-  password: string;
-}
-
-export const LoginForm = ({ successFn }: PropsWithChildren<{ successFn: () => void }>) => {
+export const LoginForm = ({ successFn }: LoginFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [form] = Form.useForm<ILoginData>();
+  const [form] = Form.useForm<LoginFormValues>();
 
-  const onFinish = (formData: ILoginData) => {
+  const onFinish = (formData: LoginFormValues) => {
     setLoading(true);
 
     signInWithEmailAndPassword(FIREBASE_AUTH, formData.email, formData.password)

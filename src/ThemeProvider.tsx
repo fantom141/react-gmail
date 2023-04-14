@@ -1,19 +1,15 @@
 import { PropsWithChildren, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, authTokenSelector, syncAuthState } from '@/store';
-import { AppLoading } from '@/components/AppLoading';
-import { theme } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 
 const { useToken } = theme;
 
-export const AppBodyInitializer = ({ children }: PropsWithChildren) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const token = useSelector(authTokenSelector);
+const CssVarsByTheme = ({ children }: PropsWithChildren) => {
   const domStyle = useMemo(() => document.documentElement.style, []);
 
   const {
     token: {
       colorBgContainer,
+      colorBgBase,
       colorPrimary,
       colorPrimaryBorder,
       colorPrimaryBg,
@@ -29,11 +25,8 @@ export const AppBodyInitializer = ({ children }: PropsWithChildren) => {
   } = useToken();
 
   useEffect(() => {
-    dispatch(syncAuthState(false));
-  }, [dispatch]);
-
-  useEffect(() => {
     domStyle.setProperty('--color-bg-container', colorBgContainer);
+    domStyle.setProperty('--color-bg-base', colorBgBase);
     domStyle.setProperty('--color-primary', colorPrimary);
     domStyle.setProperty('--color-primary-border', colorPrimaryBorder);
     domStyle.setProperty('--color-primary-bg', colorPrimaryBg);
@@ -48,6 +41,7 @@ export const AppBodyInitializer = ({ children }: PropsWithChildren) => {
   }, [
     domStyle,
     colorBgContainer,
+    colorBgBase,
     colorPrimary,
     colorPrimaryBorder,
     colorPrimaryBg,
@@ -61,5 +55,44 @@ export const AppBodyInitializer = ({ children }: PropsWithChildren) => {
     motionDurationSlow,
   ]);
 
-  return !token ? <AppLoading /> : <>{children}</>;
+  return <>{children}</>;
+};
+
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          // seed tokens
+          colorPrimary: '#0051fe',
+          colorError: '#E1605F',
+          fontFamily: 'LuxoraGrotesk, system-ui, sans-serif',
+
+          // map tokens
+          colorText: '#686D79', // for Title color set in index.css
+          colorTextBase: '#686D79',
+          colorIcon: '#686D79',
+          colorBgContainer: '#fefefe',
+          colorBgElevated: '#fefefe',
+          colorBgLayout: '#fbfbfb',
+          colorBorderSecondary: '#e9e9e9',
+        },
+        components: {
+          Typography: {
+            colorTextDescription: '#686D79A6',
+          },
+          Tooltip: {
+            colorBgDefault: '#686D79',
+            fontSize: 12,
+            sizePopupArrow: 0,
+          },
+        },
+      }}
+      componentSize="large"
+      input={{ autoComplete: 'off' }}
+      form={{ requiredMark: false }}
+    >
+      <CssVarsByTheme>{children}</CssVarsByTheme>
+    </ConfigProvider>
+  );
 };

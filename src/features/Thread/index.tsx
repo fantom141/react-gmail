@@ -4,8 +4,8 @@ import { useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-ap
 import { List } from 'antd';
 import { useEffect } from 'react';
 import { getDefaultFilterParams } from './utils';
-import { MessageDetails } from '@/components/MessageDetails';
-import { MessageDetailsListSkeleton } from '@/components/MessageDetailsListSkeleton';
+import { MessageDetails } from '@/features/MessageDetails';
+import { MessageDetailsListSkeleton } from '@/features/MessageDetailsListSkeleton';
 
 export const Thread = ({ openedMessage, close }: ThreadProps) => {
   const [getMessages, { data: messagesRes, isFetching }] = useLazyMessageControllerGetMessagesQuery();

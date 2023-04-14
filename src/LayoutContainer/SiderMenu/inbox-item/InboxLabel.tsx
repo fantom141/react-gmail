@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { NavLinkContent, navLinkContentStyles } from '../NavLinkContent';
 import styles from './InboxLabel.module.scss';
-import { SiderMenuLabelProps } from '../SiderMenu.types';
+import { SiderMenuLabelProps } from '../types';
 import { theme } from 'antd';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { useContext, useMemo } from 'react';

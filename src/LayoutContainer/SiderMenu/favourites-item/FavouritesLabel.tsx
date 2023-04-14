@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { NavLinkContent } from '../NavLinkContent';
-import { SiderMenuLabelProps } from '../SiderMenu.types';
+import { SiderMenuLabelProps } from '../types';
 import { getFavouritesCountStoreQueryArgs } from '@/utils';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 

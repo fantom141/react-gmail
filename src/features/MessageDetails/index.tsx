@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import { MessageDetailsProps } from './types';
 import { Header } from './Header';
-import { Divider, Typography } from 'antd';
+import { Typography } from 'antd';
 import { ContentBlock } from '@/components/ContentBlock';
 import classnames from 'classnames';
 

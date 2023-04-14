@@ -1,22 +1,14 @@
-import { HTMLAttributes, useContext } from 'react';
+import styles from './styles.module.scss';
+import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
-import { Avatar, Space, theme, Typography } from 'antd';
+import { Avatar, Space, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Logout } from './Logout';
+import { Logout } from '../Logout';
+import { UserInfoProps } from './types';
 
 const { Title, Text } = Typography;
 
-const {
-  defaultConfig: {
-    token: { colorBgBase },
-  },
-} = theme;
-
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  collapsed: boolean;
-}
-
-export const UserInfo = ({ collapsed }: Props) => {
+export const UserInfo = ({ collapsed }: UserInfoProps) => {
   const { user } = useContext(AuthContext);
 
   if (collapsed) {
@@ -24,12 +16,11 @@ export const UserInfo = ({ collapsed }: Props) => {
   }
 
   return (
-    <div style={{ overflow: 'hidden' }}>
+    <div className={styles.root}>
       <Space>
         <Avatar
           size="large"
           icon={<UserOutlined />}
-          style={{ backgroundColor: colorBgBase }}
         />
 
         <Space
@@ -38,8 +29,8 @@ export const UserInfo = ({ collapsed }: Props) => {
         >
           <Title
             level={5}
-            style={{ marginBottom: 0 }}
             ellipsis
+            className={styles.title}
           >
             {user?.displayName || 'No display name'}
           </Title>

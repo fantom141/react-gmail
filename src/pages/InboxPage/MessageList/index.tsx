@@ -1,6 +1,6 @@
-import { MessagePreview } from '@/components/MessagePreview';
-import { MessagePreviewListSkeleton } from '@/components/MessagePreviewListSkeleton';
-import { MessageListEmpty } from '@/components/MessageListEmpty';
+import { MessagePreview } from '@/features/MessagePreview';
+import { MessagePreviewListSkeleton } from '@/features/MessagePreviewListSkeleton';
+import { MessageListEmpty } from '@/features/MessageListEmpty';
 import { List } from 'antd';
 import { MessageListProps } from './types';
 

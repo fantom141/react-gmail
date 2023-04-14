@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { getInboxCountStoreQueryArgs, getUnreadCountStoreQueryArgs } from '@/utils';
-import { PageHeader } from '@/components/PageHeader';
+import { PageHeader } from '@/features/PageHeader';
 
 export const Header = () => {
   const { user } = useContext(AuthContext);

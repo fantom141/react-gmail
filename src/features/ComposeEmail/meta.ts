@@ -1,4 +1,4 @@
-import { InferType, object, string } from 'yup';
+import { object, string } from 'yup';
 
 export const composeEmailFormValidationSchema = object({
   email: string().email('email format is incorrect').required('Required field'),

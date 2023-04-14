@@ -1,19 +1,14 @@
-import styles from './LayoutSider.module.scss';
+import styles from './styles.module.scss';
 import { Button, Layout, Space } from 'antd';
 import { CaretLeftOutlined, CaretRightOutlined, PlusOutlined } from '@ant-design/icons';
-import { UserInfo } from './UserInfo';
+import { UserInfo } from '../UserInfo';
 import { SiderMenu } from '../SiderMenu';
 import React from 'react';
+import { LayoutSiderProps } from './types';
 
 const { Sider } = Layout;
 
-interface Props {
-  collapsed: boolean;
-  collapsedChange: () => void;
-  compose: () => void;
-}
-
-export const LayoutSider = ({ collapsed, collapsedChange, compose }: Props) => {
+export const LayoutSider = ({ collapsed, collapsedChange, compose }: LayoutSiderProps) => {
   return (
     <Sider
       collapsible

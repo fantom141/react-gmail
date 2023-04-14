@@ -1,5 +1,4 @@
 import styles from './styles.module.scss';
-import { ContentBlock } from '@/components/ContentBlock';
 import { HeaderProps } from './types';
 import { Avatar, Typography } from 'antd';
 import { useContext, useMemo } from 'react';
@@ -9,7 +8,7 @@ import { UserOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { getAdditionalInfoValue } from './utils';
 import { DotDivider } from '@/components/DotDivider';
-import { MessageActions } from '@/components/MessageActions';
+import { MessageActions } from '@/features/MessageActions';
 
 const { Title, Text } = Typography;
 

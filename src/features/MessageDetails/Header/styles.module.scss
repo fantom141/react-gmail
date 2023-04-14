@@ -1,3 +1,5 @@
+@use 'src/assets/styles/settings' as *;
+
 .root {
   display: grid;
   grid-template-areas:
@@ -28,10 +30,7 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 12px;
-
-  &Label {
-
-  }
+  @include ellipsis();
 }
 
 .actions {
