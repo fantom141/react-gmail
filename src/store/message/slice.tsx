@@ -15,4 +15,4 @@ export const messageSlice = createSlice({
   },
 });
 
-export const { openMessage, closeMessage } = messageSlice.actions;
+export const { openMessage: openMessageAction, closeMessage: closeMessageAction } = messageSlice.actions;

@@ -1,8 +1,7 @@
-import { MessageDto } from '@/store/api/message-api';
+import { MessagePreferencesDto } from '@/store/api/message-api';
 import { HTMLAttributes } from 'react';
 
-export interface MessageActionsProps
-  extends Pick<MessageDto, 'isRead' | 'isFavourite' | 'isSpam' | 'isTrash'>,
-    HTMLAttributes<HTMLDivElement> {
+export interface MessageActionsProps extends HTMLAttributes<HTMLDivElement>, Required<MessagePreferencesDto> {
   isDisplayed: boolean;
+  managePreferences: (prefs: MessagePreferencesDto) => void;
 }

@@ -126,8 +126,6 @@ export type CreateMessageDto = {
   threadId?: number;
 };
 export type MessagePreferencesDto = {
-  senderEmail?: string;
-  recipientEmail?: string;
   isFavourite?: boolean;
   isSpam?: boolean;
   isRead?: boolean;

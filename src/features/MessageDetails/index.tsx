@@ -7,14 +7,17 @@ import classnames from 'classnames';
 
 const { Paragraph, Title } = Typography;
 
-export const MessageDetails = ({ data, isOpened }: MessageDetailsProps) => {
+export const MessageDetails = ({ data, isOpened, actions }: MessageDetailsProps) => {
   const subjectClassNames = classnames(styles.subject, {
     [styles.subjectEmpty]: !data.subject,
   });
 
   return (
     <ContentBlock borderRadius>
-      <Header message={data} />
+      <Header
+        message={data}
+        actions={actions}
+      />
 
       <Title
         level={3}

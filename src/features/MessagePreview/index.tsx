@@ -5,17 +5,13 @@ import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import classnames from 'classnames';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { MessageActions } from '@/features/MessageActions';
 import { MessagePreviewProps } from './types';
 
 const { Title, Text } = Typography;
 const { useToken } = theme;
 
-export const MessagePreview = ({
-  data: { subject, content, sender, createdAt, isRead, isFavourite, isSpam, isTrash },
-  isOpened,
-  ...restProps
-}: MessagePreviewProps) => {
+export const MessagePreview = ({ data, isOpened, actions, ...restProps }: MessagePreviewProps) => {
+  const { subject, content, sender, createdAt, isRead } = data;
   const [cursorOver, setCursorOver] = useState(false);
 
   const {
@@ -49,14 +45,7 @@ export const MessagePreview = ({
         </Title>
 
         <span className={styles.dateAndActions}>
-          <MessageActions
-            isRead={isRead}
-            isFavourite={isFavourite}
-            isTrash={isTrash}
-            isSpam={isSpam}
-            isDisplayed={cursorOver}
-            className={styles.actions}
-          />
+          <div className={styles.actions}>{actions(data, cursorOver)}</div>
 
           <Text className={styles.date}>{date}</Text>
         </span>

@@ -35,5 +35,6 @@
 
 .actions {
   grid-area: actions;
-  justify-content: end;
+  justify-self: end;
+  width: max-content;
 }

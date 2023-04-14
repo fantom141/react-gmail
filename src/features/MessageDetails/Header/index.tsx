@@ -8,13 +8,12 @@ import { UserOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { getAdditionalInfoValue } from './utils';
 import { DotDivider } from '@/components/DotDivider';
-import { MessageActions } from '@/features/MessageActions';
 
 const { Title, Text } = Typography;
 
-export const Header = ({ message }: HeaderProps) => {
+export const Header = ({ message, actions }: HeaderProps) => {
   const { user } = useContext(AuthContext);
-  const { sender, recipient, isRead, isFavourite, isSpam, isTrash } = message;
+  const { sender, recipient } = message;
 
   const senderFullName = useMemo(() => getUserFullName(sender), [sender]);
   const randomAvatarBg = useMemo(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`, []);
@@ -48,14 +47,7 @@ export const Header = ({ message }: HeaderProps) => {
         <Text>{to}</Text>
       </span>
 
-      <MessageActions
-        isRead={isRead}
-        isFavourite={isFavourite}
-        isSpam={isSpam}
-        isTrash={isTrash}
-        isDisplayed
-        className={styles.actions}
-      />
+      <div className={styles.actions}>{actions}</div>
     </div>
   );
 };

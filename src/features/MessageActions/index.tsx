@@ -11,12 +11,9 @@ import {
   StarFilled,
   StarOutlined,
 } from '@ant-design/icons';
-import { useMessageControllerManagePreferencesMutation } from '@/store/api/message-api';
 import { MessageActionsProps } from './types';
 
-export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplayed, ...rest }: MessageActionsProps) => {
-  const [updatePreferences] = useMessageControllerManagePreferencesMutation();
-
+export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplayed, managePreferences, ...rest }: MessageActionsProps) => {
   const classNames = classnames(styles.item, {
     [styles.itemIsDisplayed]: isDisplayed,
   });
@@ -104,6 +101,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isRead ? toUnreadIcon : toReadIcon}
         className={classNames}
+        onClick={() => managePreferences({ isRead: !isRead })}
       ></Button>
 
       <Button
@@ -111,6 +109,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isSpam ? toNotSpamIcon : toSpamIcon}
         className={classNames}
+        onClick={() => managePreferences({ isSpam: !isSpam })}
       ></Button>
 
       <Button
@@ -118,6 +117,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isTrash ? toRestoreFromTrashIcon : toTrashIcon}
         className={classNames}
+        onClick={() => managePreferences({ isTrash: !isTrash })}
       ></Button>
 
       <Button
@@ -125,12 +125,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isFavourite ? toNotFavouriteIcon : toFavouriteIcon}
         className={`${classNames} ${isFavourite && styles.itemIsDisplayed}`}
-        onClick={async () => {
-          await updatePreferences({
-            messageId: 20,
-            messagePreferencesDto: { recipientEmail: 'me@gmail.com', isFavourite: !isFavourite },
-          }).unwrap();
-        }}
+        onClick={() => managePreferences({ isFavourite: !isFavourite })}
       ></Button>
     </Space>
   );
