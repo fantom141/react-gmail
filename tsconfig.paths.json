@@ -22,6 +22,15 @@
       ],
       "@/store/*": [
         "src/store/*"
+      ],
+      "@/services/*": [
+        "src/services/*"
+      ],
+      "@/utils/*": [
+        "src/utils/*"
+      ],
+      "@/configs/*": [
+        "src/configs/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { InboxLabel } from './InboxLabel';
-import { appRoutePath } from '@/utils';
+import { appRoutePath } from '@/configs';
 import { InboxIcon } from './InboxIcon';
 
 export const inboxItem = (collapsed: boolean): ItemType => ({

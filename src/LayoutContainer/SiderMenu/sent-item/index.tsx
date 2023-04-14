@@ -1,7 +1,7 @@
 import { SendOutlined } from '@ant-design/icons';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { SentLabel } from './SentLabel';
-import { appRoutePath } from '@/utils';
+import { appRoutePath } from '@/configs';
 
 export const sentItem: ItemType = {
   label: <SentLabel path={appRoutePath.SENT} />,
