@@ -2,16 +2,20 @@ import { Thread } from '@/features/Thread';
 import { useDispatch, useSelector } from 'react-redux';
 import { openMessageAction, openedMessageSelector, closeMessageAction, AppDispatch } from '@/store';
 import { SplitPanels } from '@/components/SplitPanels';
-import { LeftPanel } from './LeftPanel';
+import { MessagePreviewList } from '@/features/MessagePreviewList';
 import {
   enhancedApi as messageApi,
   MessageControllerGetMessagesApiArg,
   MessagePreferencesDto,
   useMessageControllerManagePreferencesMutation,
 } from '@/store/api/message-api';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Header } from './Header';
+import { Filter } from './Filter';
+import { AuthContext } from '@/context/AuthContext';
 
 export const InboxPage = () => {
+  const { user } = useContext(AuthContext);
   const [listCachedArgs, setListCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [threadCachedArgs, setThreadCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [managePreferences] = useMessageControllerManagePreferencesMutation();
@@ -22,6 +26,9 @@ export const InboxPage = () => {
     dispatch(closeMessageAction());
     setThreadCachedArgs(undefined);
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => closeMessage(), []);
 
   const updatePreferences = async (messageId: number, prefs: MessagePreferencesDto) => {
     const updateByArgs = (args: MessageControllerGetMessagesApiArg) => {
@@ -54,16 +61,23 @@ export const InboxPage = () => {
     <SplitPanels
       autoSaveId="inbox"
       left={
-        <LeftPanel
-          openedMessage={openedMessage}
-          open={message => dispatch(openMessageAction(message))}
-          emitCachedApiArgs={setListCachedArgs}
-          managePreferences={updatePreferences}
-        />
+        <>
+          <Header />
+
+          <MessagePreviewList
+            specificReqArgs={{ recipientEmail: user.email }}
+            openedMessage={openedMessage}
+            open={message => dispatch(openMessageAction(message))}
+            emitCachedApiArgs={setListCachedArgs}
+            managePreferences={updatePreferences}
+            renderFilterElement={change => <Filter change={change} />}
+          />
+        </>
       }
       right={
         openedMessage ? (
           <Thread
+            specificReqArgs={{ isSpam: false, isTrash: false }}
             openedMessage={openedMessage}
             close={closeMessage}
             emitCachedApiArgs={setThreadCachedArgs}

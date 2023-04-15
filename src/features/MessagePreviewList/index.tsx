@@ -1,36 +1,42 @@
-import { Header } from '../Header';
-import { Filter } from '../Filter';
 import { MessageListActions } from '@/features/MessageListActions';
-import { LeftPanelProps } from './types';
-import { useContext, useEffect, useMemo } from 'react';
-import { AuthContext } from '@/context/AuthContext';
-import { useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
-import { getDefaultFilterParams } from './utils';
+import { MessagePreviewListProps } from './types';
+import { useEffect, useMemo } from 'react';
+import { MessageControllerGetMessagesApiArg, useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
+import { getPredefinedReqArgs } from './utils';
 import { MessagePreviewListSkeleton } from '@/features/MessagePreviewListSkeleton';
 import { MessageListEmpty } from '@/features/MessageListEmpty';
 import { MessagePreview } from '@/features/MessagePreview';
 import { List } from 'antd';
 import { MessageActions } from '@/features/MessageActions';
 
-export const LeftPanel = ({ openedMessage, open, managePreferences, emitCachedApiArgs }: LeftPanelProps) => {
-  const { user } = useContext(AuthContext);
-  const defaultFilterParams = useMemo(() => getDefaultFilterParams(user.email), [user.email]);
+export const MessagePreviewList = ({
+  specificReqArgs,
+  openedMessage,
+  renderFilterElement,
+  open,
+  managePreferences,
+  emitCachedApiArgs,
+}: MessagePreviewListProps) => {
+  const predefineReqArgs = useMemo(() => getPredefinedReqArgs(specificReqArgs), [specificReqArgs]);
 
   const [getMessages, { data: messagesRes, isFetching, originalArgs }] = useLazyMessageControllerGetMessagesQuery();
 
   useEffect(() => {
-    getMessages(defaultFilterParams);
-  }, [getMessages, defaultFilterParams]);
+    getMessages(predefineReqArgs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     emitCachedApiArgs(originalArgs);
   }, [emitCachedApiArgs, originalArgs]);
 
+  const applyFilter = (values: MessageControllerGetMessagesApiArg) => {
+    getMessages({ ...predefineReqArgs, ...originalArgs, page: 0, ...values });
+  };
+
   return (
     <>
-      <Header />
-
-      <Filter change={v => getMessages({ ...defaultFilterParams, ...originalArgs, page: 0, ...v })} />
+      {renderFilterElement(applyFilter)}
 
       {isFetching || !messagesRes?.content ? (
         <MessagePreviewListSkeleton />
@@ -57,7 +63,7 @@ export const LeftPanel = ({ openedMessage, open, managePreferences, emitCachedAp
                   data={item}
                   isOpened={item.messageId === openedMessage?.messageId}
                   onClick={() => open(item)}
-                  actions={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
+                  renderActions={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
                     <MessageActions
                       isRead={isRead}
                       isFavourite={isFavourite}

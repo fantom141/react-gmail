@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 const { Paragraph, Title } = Typography;
 
-export const MessageDetails = ({ data, isOpened, actions }: MessageDetailsProps) => {
+export const MessageDetails = ({ data, isOpened, renderActions }: MessageDetailsProps) => {
   const subjectClassNames = classnames(styles.subject, {
     [styles.subjectEmpty]: !data.subject,
   });
@@ -16,7 +16,7 @@ export const MessageDetails = ({ data, isOpened, actions }: MessageDetailsProps)
     <ContentBlock borderRadius>
       <Header
         message={data}
-        actions={actions}
+        actions={renderActions}
       />
 
       <Title

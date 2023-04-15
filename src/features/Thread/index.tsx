@@ -3,17 +3,18 @@ import { ThreadProps } from './types';
 import { useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
 import { List } from 'antd';
 import { useEffect } from 'react';
-import { getDefaultFilterParams } from './utils';
+import { getPredefinedReqArgs } from './utils';
 import { MessageDetails } from '@/features/MessageDetails';
 import { MessageDetailsListSkeleton } from '@/features/MessageDetailsListSkeleton';
 import { MessageActions } from '@/features/MessageActions';
 
-export const Thread = ({ openedMessage, close, managePreferences, emitCachedApiArgs }: ThreadProps) => {
+export const Thread = ({ specificReqArgs, openedMessage, close, managePreferences, emitCachedApiArgs }: ThreadProps) => {
   const [getMessages, { data: messagesRes, isFetching, originalArgs }] = useLazyMessageControllerGetMessagesQuery();
 
   useEffect(() => {
-    getMessages(getDefaultFilterParams(openedMessage.threadId));
-  }, [getMessages, openedMessage.threadId]);
+    getMessages(getPredefinedReqArgs(openedMessage.threadId, specificReqArgs));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openedMessage.threadId]);
 
   useEffect(() => {
     emitCachedApiArgs(originalArgs);
@@ -33,7 +34,7 @@ export const Thread = ({ openedMessage, close, managePreferences, emitCachedApiA
             <MessageDetails
               data={item}
               isOpened={item.messageId === openedMessage.messageId}
-              actions={
+              renderActions={
                 <MessageActions
                   isRead={item.isRead}
                   isFavourite={item.isFavourite}

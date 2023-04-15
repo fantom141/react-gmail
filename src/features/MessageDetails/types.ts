@@ -3,6 +3,6 @@ import { ReactElement } from 'react';
 
 export interface MessageDetailsProps {
   data: MessageDto;
-  actions: ReactElement;
+  renderActions: ReactElement;
   isOpened?: boolean;
 }

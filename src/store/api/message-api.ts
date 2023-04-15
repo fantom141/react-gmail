@@ -15,6 +15,7 @@ const injectedRtkApi = api.injectEndpoints({
           isSpam: queryArg.isSpam,
           isRead: queryArg.isRead,
           isTrash: queryArg.isTrash,
+          messageIds: queryArg.messageIds,
           threadId: queryArg.threadId,
           createdDateFrom: queryArg.createdDateFrom,
           createdDateTo: queryArg.createdDateTo,
@@ -63,6 +64,7 @@ export type MessageControllerGetMessagesApiArg = {
   isSpam?: boolean;
   isRead?: boolean;
   isTrash?: boolean;
+  messageIds?: number[];
   threadId?: number;
   createdDateFrom?: string;
   createdDateTo?: string;
