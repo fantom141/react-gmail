@@ -1,15 +1,12 @@
-import styles from './InboxIcon.module.scss';
+import styles from './styles.module.scss';
 import { MailOutlined } from '@ant-design/icons';
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { getUnreadCountStoreQueryArgs } from '@/utils';
+import { InboxIconProps } from './types';
 
-interface Props {
-  collapsed: boolean;
-}
-
-export const InboxIcon = ({ collapsed }: Props) => {
+export const InboxIcon = ({ collapsed }: InboxIconProps) => {
   const { user } = useContext(AuthContext);
   const { data: unreadCount } = useMessageControllerGetCountQuery(getUnreadCountStoreQueryArgs(user.email));
 

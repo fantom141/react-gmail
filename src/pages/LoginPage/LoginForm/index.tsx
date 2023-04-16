@@ -8,7 +8,7 @@ import { LoginFormProps, LoginFormValues } from './types';
 const { Item } = Form;
 const { Password } = Input;
 
-export const LoginForm = ({ successFn }: LoginFormProps) => {
+export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm<LoginFormValues>();
 
@@ -18,7 +18,7 @@ export const LoginForm = ({ successFn }: LoginFormProps) => {
     signInWithEmailAndPassword(FIREBASE_AUTH, formData.email, formData.password)
       .then(res => {
         console.log({ res });
-        successFn();
+        onSuccess();
       })
       .catch(() => {
         setLoading(false);

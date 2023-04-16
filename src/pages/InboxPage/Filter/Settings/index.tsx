@@ -2,11 +2,11 @@ import { Button, DatePicker, Input, Row, Space } from 'antd';
 import { Controller } from 'react-hook-form';
 import React, { useEffect } from 'react';
 import { FormItem } from '@/components/FormItem';
-import { FilterSettingsProps } from './types';
+import { SettingsProps } from './types';
 
 const { RangePicker } = DatePicker;
 
-export const FilterSettings = ({ control, apply, reset }: FilterSettingsProps) => {
+export const Settings = ({ control, onApply, onReset }: SettingsProps) => {
   // prevent close popover after date selection
   useEffect(() => {
     const handleClick = (event: Event) => {
@@ -58,7 +58,7 @@ export const FilterSettings = ({ control, apply, reset }: FilterSettingsProps) =
             type="text"
             size="middle"
             htmlType="button"
-            onClick={reset}
+            onClick={onReset}
           >
             Reset
           </Button>
@@ -67,7 +67,7 @@ export const FilterSettings = ({ control, apply, reset }: FilterSettingsProps) =
             type="primary"
             size="middle"
             htmlType="button"
-            onClick={apply}
+            onClick={onApply}
           >
             Apply
           </Button>

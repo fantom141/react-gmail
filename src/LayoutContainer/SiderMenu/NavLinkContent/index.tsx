@@ -1,20 +1,16 @@
-import styles from './NavLinkContent.module.scss';
+import styles from './styles.module.scss';
 import { theme } from 'antd';
+import { NavLinkContentProps } from './types';
 
 const { useToken } = theme;
 
-interface Props {
-  title: string;
-  totalCount: number;
-}
-
-export const NavLinkContent = ({ title, totalCount }: Props) => {
+export const NavLinkContent = ({ title, totalCount }: NavLinkContentProps) => {
   const {
     token: { colorTextTertiary: color },
   } = useToken();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.root}>
       <span>{title}</span>
 
       <div className={styles.counts}>{!!totalCount && <span style={{ color }}>{totalCount}</span>}</div>

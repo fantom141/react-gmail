@@ -7,9 +7,3 @@ export const composeEmailFormValidationSchema = object({
 });
 
 // export type ComposeEmailFormData = InferType<typeof composeEmailFormValidationSchema>;
-export type ComposeEmailFormData = {
-  email: string;
-  subject?: string;
-  content: string;
-};
-export type SaveAsDraftFormData = Partial<ComposeEmailFormData>;

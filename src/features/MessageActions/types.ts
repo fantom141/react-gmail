@@ -3,5 +3,5 @@ import { HTMLAttributes } from 'react';
 
 export interface MessageActionsProps extends HTMLAttributes<HTMLDivElement>, Required<MessagePreferencesDto> {
   isDisplayed: boolean;
-  managePreferences: (prefs: MessagePreferencesDto) => void;
+  onManagePreferences: (prefs: MessagePreferencesDto) => void;
 }

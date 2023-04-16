@@ -12,9 +12,9 @@ export const MessageListActions = ({
   currentPage,
   pageSize,
   sort,
-  paginate,
-  changeSort,
-  refresh,
+  onPaginate,
+  onChangeSort,
+  onRefresh,
 }: MessageListActionsProps) => {
   const sortDir: SortDirs = useMemo(() => expandSort(sort).dir, [sort]);
 
@@ -32,7 +32,7 @@ export const MessageListActions = ({
           type="text"
           size="small"
           icon={<RedoOutlined />}
-          onClick={refresh}
+          onClick={onRefresh}
         />
       </Tooltip>
 
@@ -44,7 +44,7 @@ export const MessageListActions = ({
           type="text"
           size="small"
           icon={sortDir === SortDirs.ASC ? <IconSortUp /> : <IconSortDown />}
-          onClick={() => changeSort(prepareToChangeSort(sort))}
+          onClick={() => onChangeSort(prepareToChangeSort(sort))}
         />
       </Tooltip>
 
@@ -55,7 +55,7 @@ export const MessageListActions = ({
         pageSize={pageSize}
         showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
         className={styles.paginator}
-        onChange={(page, pageSize) => paginate(page - 1, pageSize)}
+        onChange={(page, pageSize) => onPaginate(page - 1, pageSize)}
       />
     </ContentBlock>
   );

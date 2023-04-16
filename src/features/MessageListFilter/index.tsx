@@ -5,9 +5,9 @@ import { FormItem } from '@/components/FormItem';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { ContentBlock } from '@/components/ContentBlock';
-import { PageFilterProps } from './types';
+import { MessageListFilterProps } from './types';
 
-export const PageFilter = forwardRef(({ control, handleSubmit, suffix }: PageFilterProps, ref: Ref<HTMLFormElement>) => {
+export const MessageListFilter = forwardRef(({ control, onHandleSubmit, suffix }: MessageListFilterProps, ref: Ref<HTMLFormElement>) => {
   return (
     <ContentBlock
       skipVerticalIndent={true}
@@ -15,7 +15,7 @@ export const PageFilter = forwardRef(({ control, handleSubmit, suffix }: PageFil
       className={styles.root}
     >
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onHandleSubmit}
         autoComplete="none"
         ref={ref}
       >

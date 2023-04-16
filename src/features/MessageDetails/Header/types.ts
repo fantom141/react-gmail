@@ -3,5 +3,5 @@ import { ReactElement } from 'react';
 
 export interface HeaderProps {
   message: MessageDto;
-  actions: ReactElement;
+  actionsElement: ReactElement;
 }

@@ -25,7 +25,7 @@ export const LoginPage = () => {
               Log in
             </Title>
 
-            <LoginForm successFn={() => navigate('/')}></LoginForm>
+            <LoginForm onSuccess={() => navigate('/')}></LoginForm>
           </Col>
         </Row>
       </Col>

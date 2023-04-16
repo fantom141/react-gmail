@@ -60,28 +60,28 @@ export const InboxPage = () => {
   return (
     <SplitPanels
       autoSaveId="inbox"
-      left={
+      leftElement={
         <>
           <Header />
 
           <MessagePreviewList
             specificReqArgs={{ recipientEmail: user.email }}
             openedMessage={openedMessage}
-            open={message => dispatch(openMessageAction(message))}
-            emitCachedApiArgs={setListCachedArgs}
-            managePreferences={updatePreferences}
-            renderFilterElement={change => <Filter change={change} />}
+            onOpen={message => dispatch(openMessageAction(message))}
+            onCachedApiArgs={setListCachedArgs}
+            onManagePreferences={updatePreferences}
+            renderFilterElement={change => <Filter onChange={change} />}
           />
         </>
       }
-      right={
+      rightElement={
         openedMessage ? (
           <Thread
             specificReqArgs={{ isSpam: false, isTrash: false }}
             openedMessage={openedMessage}
-            close={closeMessage}
-            emitCachedApiArgs={setThreadCachedArgs}
-            managePreferences={updatePreferences}
+            onClose={closeMessage}
+            onCachedApiArgs={setThreadCachedArgs}
+            onManagePreferences={updatePreferences}
           />
         ) : null
       }

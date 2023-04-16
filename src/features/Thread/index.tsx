@@ -1,4 +1,4 @@
-import { ThreadHeader } from './ThreadHeader';
+import { Header } from './Header';
 import { ThreadProps } from './types';
 import { useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
 import { List } from 'antd';
@@ -8,7 +8,7 @@ import { MessageDetails } from '@/features/MessageDetails';
 import { MessageDetailsListSkeleton } from '@/features/MessageDetailsListSkeleton';
 import { MessageActions } from '@/features/MessageActions';
 
-export const Thread = ({ specificReqArgs, openedMessage, close, managePreferences, emitCachedApiArgs }: ThreadProps) => {
+export const Thread = ({ specificReqArgs, openedMessage, onClose, onManagePreferences, onCachedApiArgs }: ThreadProps) => {
   const [getMessages, { data: messagesRes, isFetching, originalArgs }] = useLazyMessageControllerGetMessagesQuery();
 
   useEffect(() => {
@@ -17,12 +17,12 @@ export const Thread = ({ specificReqArgs, openedMessage, close, managePreference
   }, [openedMessage.threadId]);
 
   useEffect(() => {
-    emitCachedApiArgs(originalArgs);
-  }, [emitCachedApiArgs, originalArgs]);
+    onCachedApiArgs(originalArgs);
+  }, [onCachedApiArgs, originalArgs]);
 
   return (
     <>
-      <ThreadHeader close={close} />
+      <Header onClose={onClose} />
 
       {isFetching || !messagesRes ? (
         <MessageDetailsListSkeleton />
@@ -34,14 +34,14 @@ export const Thread = ({ specificReqArgs, openedMessage, close, managePreference
             <MessageDetails
               data={item}
               isOpened={item.messageId === openedMessage.messageId}
-              renderActions={
+              renderActionsElement={
                 <MessageActions
                   isRead={item.isRead}
                   isFavourite={item.isFavourite}
                   isSpam={item.isSpam}
                   isTrash={item.isTrash}
                   isDisplayed
-                  managePreferences={prefs => managePreferences(item.messageId, prefs)}
+                  onManagePreferences={prefs => onManagePreferences(item.messageId, prefs)}
                 />
               }
             />

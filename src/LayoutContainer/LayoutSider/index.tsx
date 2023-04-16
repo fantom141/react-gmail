@@ -8,7 +8,7 @@ import { LayoutSiderProps } from './types';
 
 const { Sider } = Layout;
 
-export const LayoutSider = ({ collapsed, collapsedChange, compose }: LayoutSiderProps) => {
+export const LayoutSider = ({ collapsed, onCollapsedChange, onCompose }: LayoutSiderProps) => {
   return (
     <Sider
       collapsible
@@ -24,7 +24,7 @@ export const LayoutSider = ({ collapsed, collapsedChange, compose }: LayoutSider
           size="small"
           type="text"
           icon={collapsed ? <CaretRightOutlined /> : <CaretLeftOutlined />}
-          onClick={() => collapsedChange()}
+          onClick={() => onCollapsedChange()}
           className={styles.toggler}
         />
 
@@ -39,7 +39,7 @@ export const LayoutSider = ({ collapsed, collapsedChange, compose }: LayoutSider
             type="primary"
             icon={<PlusOutlined />}
             size="large"
-            onClick={() => compose()}
+            onClick={() => onCompose()}
           >
             {!collapsed ? 'Compose' : ''}
           </Button>

@@ -10,7 +10,7 @@ import { MessagePreviewProps } from './types';
 const { Title, Text } = Typography;
 const { useToken } = theme;
 
-export const MessagePreview = ({ data, isOpened, renderActions, ...restProps }: MessagePreviewProps) => {
+export const MessagePreview = ({ data, isOpened, renderActionsElement, ...restProps }: MessagePreviewProps) => {
   const { subject, content, sender, createdAt, isRead } = data;
   const [cursorOver, setCursorOver] = useState(false);
 
@@ -45,7 +45,7 @@ export const MessagePreview = ({ data, isOpened, renderActions, ...restProps }: 
         </Title>
 
         <span className={styles.dateAndActions}>
-          <div className={styles.actions}>{renderActions(data, cursorOver)}</div>
+          <div className={styles.actions}>{renderActionsElement(data, cursorOver)}</div>
 
           <Text className={styles.date}>{date}</Text>
         </span>

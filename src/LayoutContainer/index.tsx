@@ -29,8 +29,8 @@ export const LayoutContainer = () => {
       <Layout hasSider>
         <LayoutSider
           collapsed={siderCollapsed}
-          collapsedChange={() => changeCollapsedState(!siderCollapsed)}
-          compose={() => setComposeEmailOpened(true)}
+          onCollapsedChange={() => changeCollapsedState(!siderCollapsed)}
+          onCompose={() => setComposeEmailOpened(true)}
         />
 
         <Layout className={siderCollapsed ? styles.collapsed : styles.expanded}>
@@ -41,7 +41,7 @@ export const LayoutContainer = () => {
           {composeEmailOpened && (
             <ComposeEmail
               className={styles.composeEmail}
-              close={() => setComposeEmailOpened(false)}
+              onClose={() => setComposeEmailOpened(false)}
             />
           )}
         </Layout>

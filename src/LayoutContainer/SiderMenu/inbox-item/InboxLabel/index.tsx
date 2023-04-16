@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { NavLinkContent, navLinkContentStyles } from '../NavLinkContent';
-import styles from './InboxLabel.module.scss';
-import { SiderMenuLabelProps } from '../types';
+import { NavLinkContent, navLinkContentStyles } from '../../NavLinkContent';
+import styles from './styles.module.scss';
+import { SiderMenuLabelProps } from '../../types';
 import { theme } from 'antd';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { useContext, useMemo } from 'react';
@@ -9,11 +9,10 @@ import { AuthContext } from '@/context/AuthContext';
 import { getInboxCountStoreQueryArgs, getUnreadCountStoreQueryArgs } from '@/utils';
 
 const { useToken } = theme;
+const title = 'Inbox';
+const maxUnreadDisplayed = 99;
 
 export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
-  const title = 'Inbox';
-  const maxUnreadDisplayed = 99;
-
   const {
     token: { colorError: unreadColor, colorBgBase, borderRadius, colorTextTertiary: totalColor },
   } = useToken();
@@ -36,7 +35,7 @@ export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
           totalCount={totalCount}
         />
       ) : (
-        <div className={navLinkContentStyles.container}>
+        <div className={navLinkContentStyles.root}>
           <span>Inbox</span>
 
           <div className={`${navLinkContentStyles.counts} ${styles.counts}`}>

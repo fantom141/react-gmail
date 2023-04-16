@@ -3,7 +3,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { SplitPanelsProps } from './types';
 import { Resizer } from './Resizer';
 
-export const SplitPanels = ({ autoSaveId, left, right }: SplitPanelsProps) => {
+export const SplitPanels = ({ autoSaveId, leftElement, rightElement }: SplitPanelsProps) => {
   return (
     <PanelGroup
       direction="horizontal"
@@ -14,10 +14,10 @@ export const SplitPanels = ({ autoSaveId, left, right }: SplitPanelsProps) => {
         minSize={40}
         className={styles.panel}
       >
-        {left}
+        {leftElement}
       </Panel>
 
-      {right && (
+      {rightElement && (
         <>
           <PanelResizeHandle>
             <Resizer />
@@ -27,7 +27,7 @@ export const SplitPanels = ({ autoSaveId, left, right }: SplitPanelsProps) => {
             minSize={40}
             className={styles.panel}
           >
-            {right}
+            {rightElement}
           </Panel>
         </>
       )}

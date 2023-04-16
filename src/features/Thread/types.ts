@@ -3,7 +3,7 @@ import { MessageControllerGetMessagesApiArg, MessageDto, MessagePreferencesDto }
 export interface ThreadProps {
   specificReqArgs: MessageControllerGetMessagesApiArg;
   openedMessage: MessageDto;
-  close: () => void;
-  managePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
-  emitCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
+  onClose: () => void;
+  onManagePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
+  onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
 }

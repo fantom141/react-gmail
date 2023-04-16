@@ -3,9 +3,9 @@ export interface MessageListActionsProps {
   currentPage: number;
   pageSize: number;
   sort: string[];
-  refresh: () => void;
-  paginate: (page: number, size: number) => void;
-  changeSort: (sort: string[]) => void;
+  onRefresh: () => void;
+  onPaginate: (page: number, size: number) => void;
+  onChangeSort: (sort: string[]) => void;
 }
 
 export enum SortDirs {

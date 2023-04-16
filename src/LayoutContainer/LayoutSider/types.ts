@@ -1,5 +1,5 @@
 export interface LayoutSiderProps {
   collapsed: boolean;
-  collapsedChange: () => void;
-  compose: () => void;
+  onCollapsedChange: () => void;
+  onCompose: () => void;
 }

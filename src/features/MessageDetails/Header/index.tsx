@@ -11,7 +11,7 @@ import { DotDivider } from '@/components/DotDivider';
 
 const { Title, Text } = Typography;
 
-export const Header = ({ message, actions }: HeaderProps) => {
+export const Header = ({ message, actionsElement }: HeaderProps) => {
   const { user } = useContext(AuthContext);
   const { sender, recipient } = message;
 
@@ -47,7 +47,7 @@ export const Header = ({ message, actions }: HeaderProps) => {
         <Text>{to}</Text>
       </span>
 
-      <div className={styles.actions}>{actions}</div>
+      <div className={styles.actions}>{actionsElement}</div>
     </div>
   );
 };

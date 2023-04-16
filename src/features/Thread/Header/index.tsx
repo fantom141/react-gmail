@@ -1,12 +1,9 @@
 import { Button, Row, Space } from 'antd';
 import { ArrowLeftOutlined, DeleteOutlined, PrinterOutlined } from '@ant-design/icons';
 import { ContentBlock } from '@/components/ContentBlock';
+import { HeaderProps } from './types';
 
-interface Props {
-  close: () => void;
-}
-
-export const ThreadHeader = ({ close }: Props) => {
+export const Header = ({ onClose }: HeaderProps) => {
   return (
     <ContentBlock transparent>
       <Row justify="space-between">
@@ -14,7 +11,7 @@ export const ThreadHeader = ({ close }: Props) => {
           type="text"
           size="small"
           icon={<ArrowLeftOutlined />}
-          onClick={close}
+          onClick={onClose}
         />
 
         <Space>

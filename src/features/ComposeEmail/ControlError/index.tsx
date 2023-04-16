@@ -1,11 +1,11 @@
 import { theme, Tooltip } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import { FieldError } from 'react-hook-form';
+import { ControlErrorProps } from './types';
 
 const { useToken } = theme;
 
-export const ComposeEmailFormControlError = ({ message }: Required<Pick<FieldError, 'message'>>) => {
+export const ControlError = ({ message }: ControlErrorProps) => {
   const {
     token: { colorError },
   } = useToken();

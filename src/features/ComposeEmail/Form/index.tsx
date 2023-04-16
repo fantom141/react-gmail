@@ -1,35 +1,34 @@
-import styles from './ComposeEmail.module.scss';
+import styles from './styles.module.scss';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Divider, Input, Row, Space, theme } from 'antd';
-import { ComposeEmailFormData, composeEmailFormValidationSchema, SaveAsDraftFormData } from './meta';
+import { composeEmailFormValidationSchema } from '../utils';
+import { ComposeEmailFormValues } from '../types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ComposeEmailFormControlError } from './ComposeEmailFormControlError';
+import { ControlError } from '../ControlError';
+import classnames from 'classnames';
+import { FormProps } from './types';
 
 const { useToken } = theme;
 const { TextArea } = Input;
 const { Compact } = Space;
 
-interface Props {
-  send: (data: ComposeEmailFormData) => void;
-  saveAsDraft: (data: SaveAsDraftFormData) => void;
-  sendIsLoading: boolean;
-  saveAsDraftIsLoading: boolean;
-}
+export const Form = ({ onSend, onSaveAsDraft, sendIsLoading, saveAsDraftIsLoading }: FormProps) => {
+  const subjectClassNames = classnames(styles.control, styles.subject);
+  const contentClassNames = classnames(styles.control, styles.content);
 
-export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraftIsLoading }: Props) => {
   const {
     token: { colorErrorBg },
   } = useToken();
 
-  const { control, handleSubmit, getValues } = useForm<ComposeEmailFormData>({
+  const { control, handleSubmit, getValues } = useForm<ComposeEmailFormValues>({
     mode: 'onBlur',
     resolver: yupResolver(composeEmailFormValidationSchema),
   });
 
-  const onSubmit = (data: ComposeEmailFormData) => {
+  const onSubmit = (data: ComposeEmailFormValues) => {
     console.log(data);
-    send(data);
+    onSend(data);
   };
 
   const divider = (
@@ -42,7 +41,7 @@ export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraft
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={styles.formContent}
+      className={styles.root}
       autoComplete="none"
     >
       <Controller
@@ -53,8 +52,8 @@ export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraft
             {...field}
             bordered={false}
             placeholder="To"
-            className={styles.formControl}
-            suffix={invalid ? <ComposeEmailFormControlError message={error.message} /> : <span />}
+            className={styles.control}
+            suffix={invalid ? <ControlError message={error.message} /> : <span />}
             style={{ backgroundColor: invalid ? colorErrorBg : '' }}
           />
         )}
@@ -70,7 +69,7 @@ export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraft
             {...field}
             bordered={false}
             placeholder="Subject"
-            className={`${styles.formControl} ${styles.formControlSubject}`}
+            className={subjectClassNames}
           />
         )}
       />
@@ -85,7 +84,7 @@ export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraft
             {...field}
             bordered={false}
             placeholder="Write your message..."
-            className={`${styles.formControl} ${styles.formControlMessage}`}
+            className={contentClassNames}
             style={{ backgroundColor: invalid ? colorErrorBg : '' }}
           />
         )}
@@ -101,7 +100,7 @@ export const ComposeEmailForm = ({ send, saveAsDraft, sendIsLoading, saveAsDraft
             htmlType="button"
             loading={saveAsDraftIsLoading}
             disabled={sendIsLoading}
-            onClick={() => saveAsDraft(getValues())}
+            onClick={() => onSaveAsDraft(getValues())}
           >
             Save as draft
           </Button>

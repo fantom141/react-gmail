@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.subject {
+  font-weight: 600;
+}
+
+.content {
+  height: 26rem !important;
+  resize: none !important;
+}

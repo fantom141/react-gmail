@@ -3,15 +3,15 @@ import { ControlOutlined } from '@ant-design/icons';
 import { useForm } from 'react-hook-form';
 import { FilterProps, InboxFilterValues } from './types';
 import React, { useRef } from 'react';
-import { FilterSettings } from './FilterSettings';
-import { PageFilter } from '@/features/PageFilter';
+import { Settings } from './Settings';
+import { MessageListFilter } from '@/features/MessageListFilter';
 import { prepareFilterValuesToOutput } from './utils';
 
-export const Filter = ({ change }: FilterProps) => {
+export const Filter = ({ onChange }: FilterProps) => {
   const { control, handleSubmit, reset } = useForm<InboxFilterValues>();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const onSubmit = (val: InboxFilterValues) => change(prepareFilterValuesToOutput(val));
+  const onSubmit = (val: InboxFilterValues) => onChange(prepareFilterValuesToOutput(val));
   const applySettings = () => formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
   const resetForm = () => {
     reset();
@@ -23,10 +23,10 @@ export const Filter = ({ change }: FilterProps) => {
       placement="bottomRight"
       trigger="click"
       content={
-        <FilterSettings
+        <Settings
           control={control}
-          reset={resetForm}
-          apply={applySettings}
+          onReset={resetForm}
+          onApply={applySettings}
         />
       }
     >
@@ -40,9 +40,9 @@ export const Filter = ({ change }: FilterProps) => {
   );
 
   return (
-    <PageFilter
+    <MessageListFilter
       control={control}
-      handleSubmit={handleSubmit(onSubmit)}
+      onHandleSubmit={handleSubmit(onSubmit)}
       suffix={settings}
       ref={formRef}
     />

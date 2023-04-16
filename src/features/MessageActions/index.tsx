@@ -13,7 +13,15 @@ import {
 } from '@ant-design/icons';
 import { MessageActionsProps } from './types';
 
-export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplayed, managePreferences, ...rest }: MessageActionsProps) => {
+export const MessageActions = ({
+  isRead,
+  isFavourite,
+  isSpam,
+  isTrash,
+  isDisplayed,
+  onManagePreferences,
+  ...rest
+}: MessageActionsProps) => {
   const classNames = classnames(styles.item, {
     [styles.itemIsDisplayed]: isDisplayed,
   });
@@ -101,7 +109,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isRead ? toUnreadIcon : toReadIcon}
         className={classNames}
-        onClick={() => managePreferences({ isRead: !isRead })}
+        onClick={() => onManagePreferences({ isRead: !isRead })}
       ></Button>
 
       <Button
@@ -109,7 +117,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isSpam ? toNotSpamIcon : toSpamIcon}
         className={classNames}
-        onClick={() => managePreferences({ isSpam: !isSpam })}
+        onClick={() => onManagePreferences({ isSpam: !isSpam })}
       ></Button>
 
       <Button
@@ -117,7 +125,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isTrash ? toRestoreFromTrashIcon : toTrashIcon}
         className={classNames}
-        onClick={() => managePreferences({ isTrash: !isTrash })}
+        onClick={() => onManagePreferences({ isTrash: !isTrash })}
       ></Button>
 
       <Button
@@ -125,7 +133,7 @@ export const MessageActions = ({ isRead, isFavourite, isSpam, isTrash, isDisplay
         size="small"
         icon={isFavourite ? toNotFavouriteIcon : toFavouriteIcon}
         className={`${classNames} ${isFavourite && styles.itemIsDisplayed}`}
-        onClick={() => managePreferences({ isFavourite: !isFavourite })}
+        onClick={() => onManagePreferences({ isFavourite: !isFavourite })}
       ></Button>
     </Space>
   );

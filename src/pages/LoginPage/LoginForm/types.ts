@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 interface Props {
-  successFn: () => void;
+  onSuccess: () => void;
 }
 export interface LoginFormProps extends PropsWithChildren<Props> {}
 

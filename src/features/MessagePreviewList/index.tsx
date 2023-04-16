@@ -13,9 +13,9 @@ export const MessagePreviewList = ({
   specificReqArgs,
   openedMessage,
   renderFilterElement,
-  open,
-  managePreferences,
-  emitCachedApiArgs,
+  onOpen,
+  onManagePreferences,
+  onCachedApiArgs,
 }: MessagePreviewListProps) => {
   const predefineReqArgs = useMemo(() => getPredefinedReqArgs(specificReqArgs), [specificReqArgs]);
 
@@ -27,8 +27,8 @@ export const MessagePreviewList = ({
   }, []);
 
   useEffect(() => {
-    emitCachedApiArgs(originalArgs);
-  }, [emitCachedApiArgs, originalArgs]);
+    onCachedApiArgs(originalArgs);
+  }, [onCachedApiArgs, originalArgs]);
 
   const applyFilter = (values: MessageControllerGetMessagesApiArg) => {
     getMessages({ ...predefineReqArgs, ...originalArgs, page: 0, ...values });
@@ -47,9 +47,9 @@ export const MessagePreviewList = ({
             currentPage={messagesRes.page}
             pageSize={messagesRes.size}
             sort={messagesRes.sort}
-            paginate={(page, size) => getMessages({ ...originalArgs, page, size })}
-            changeSort={val => getMessages({ ...originalArgs, sort: val })}
-            refresh={() => getMessages(originalArgs)}
+            onPaginate={(page, size) => getMessages({ ...originalArgs, page, size })}
+            onChangeSort={val => getMessages({ ...originalArgs, sort: val })}
+            onRefresh={() => getMessages(originalArgs)}
           />
 
           {!messagesRes.content.length ? (
@@ -62,15 +62,15 @@ export const MessagePreviewList = ({
                 <MessagePreview
                   data={item}
                   isOpened={item.messageId === openedMessage?.messageId}
-                  onClick={() => open(item)}
-                  renderActions={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
+                  onClick={() => onOpen(item)}
+                  renderActionsElement={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
                     <MessageActions
                       isRead={isRead}
                       isFavourite={isFavourite}
                       isTrash={isTrash}
                       isSpam={isSpam}
                       isDisplayed={cursorOver}
-                      managePreferences={prefs => managePreferences(messageId, prefs)}
+                      onManagePreferences={prefs => onManagePreferences(messageId, prefs)}
                     />
                   )}
                 />
