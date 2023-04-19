@@ -13,7 +13,10 @@ export const MessageDetails = ({ data, isOpened, renderActionsElement }: Message
   });
 
   return (
-    <ContentBlock borderRadius>
+    <ContentBlock
+      borderRadius
+      id={`${data.messageId}`}
+    >
       <Header
         message={data}
         actionsElement={renderActionsElement}

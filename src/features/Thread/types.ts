@@ -6,4 +6,6 @@ export interface ThreadProps {
   onClose: () => void;
   onManagePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
   onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
+  replyIsDisplayed?: boolean;
+  onReply?: (message: MessageDto) => void;
 }

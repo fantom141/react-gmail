@@ -8,4 +8,5 @@ export interface MessagePreviewListProps {
   onOpen: (v: MessageDto) => void;
   onManagePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
   onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
+  onRefresh?: () => void;
 }

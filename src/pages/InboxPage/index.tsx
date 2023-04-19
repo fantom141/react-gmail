@@ -1,11 +1,26 @@
 import { Thread } from '@/features/Thread';
 import { useDispatch, useSelector } from 'react-redux';
-import { openMessageAction, openedMessageSelector, closeMessageAction, AppDispatch } from '@/store';
+import {
+  AppDispatch,
+  closeMessageAction,
+  decreaseFavouritesCountPatchAction,
+  decreaseUnreadCountPatchAction,
+  getInboxCountRefreshAction,
+  getUnreadCountRefreshAction,
+  increaseFavouritesCountPatchAction,
+  increaseSentCountPatchAction,
+  increaseSpamCountPatchAction,
+  increaseTrashCountPatchAction,
+  increaseUnreadCountPatchAction,
+  openedMessageSelector,
+  openMessageAction,
+  setInProgressAction,
+} from '@/store';
 import { SplitPanels } from '@/components/SplitPanels';
 import { MessagePreviewList } from '@/features/MessagePreviewList';
 import {
-  enhancedApi as messageApi,
   MessageControllerGetMessagesApiArg,
+  MessageDto,
   MessagePreferencesDto,
   useMessageControllerManagePreferencesMutation,
 } from '@/store/api/message-api';
@@ -13,6 +28,10 @@ import { useContext, useEffect, useState } from 'react';
 import { Header } from './Header';
 import { Filter } from './Filter';
 import { AuthContext } from '@/context/AuthContext';
+import { getInboxListPatchAction } from './utils';
+import { Scrollable } from '@/components/Scrollable';
+import { notification } from 'antd';
+import { NotificationConfig } from '@/configs';
 
 export const InboxPage = () => {
   const { user } = useContext(AuthContext);
@@ -21,47 +40,59 @@ export const InboxPage = () => {
   const [managePreferences] = useMessageControllerManagePreferencesMutation();
   const dispatch = useDispatch<AppDispatch>();
   const openedMessage = useSelector(openedMessageSelector);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => closeMessage(), []);
 
   const closeMessage = () => {
     dispatch(closeMessageAction());
     setThreadCachedArgs(undefined);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => closeMessage(), []);
+  const handleReply = (message: MessageDto) => {
+    dispatch(increaseSentCountPatchAction(user.email));
+  };
+
+  const refreshCounts = () => {
+    dispatch(getInboxCountRefreshAction(user.email));
+    dispatch(getUnreadCountRefreshAction(user.email));
+  };
 
   const updatePreferences = async (messageId: number, prefs: MessagePreferencesDto) => {
-    const updateByArgs = (args: MessageControllerGetMessagesApiArg) => {
-      dispatch(
-        messageApi.util.updateQueryData('messageControllerGetMessages', args, draft => {
-          draft.content = draft.content.map(el => {
-            if (el.messageId === messageId) {
-              return { ...el, ...prefs };
-            }
-
-            return el;
-          });
-        })
-      );
-    };
-
+    const { isRead, isFavourite, isSpam, isTrash } = prefs;
     try {
+      dispatch(setInProgressAction(true));
       await managePreferences({ messageId, messagePreferencesDto: prefs }).unwrap();
-      if (listCachedArgs) {
-        updateByArgs(listCachedArgs);
+
+      dispatch(getInboxListPatchAction(messageId, prefs, listCachedArgs));
+      threadCachedArgs && dispatch(getInboxListPatchAction(messageId, prefs, threadCachedArgs));
+
+      if (isRead != null) {
+        dispatch(isRead ? decreaseUnreadCountPatchAction(user.email) : increaseUnreadCountPatchAction(user.email));
       }
 
-      if (threadCachedArgs) {
-        updateByArgs(threadCachedArgs);
+      if (isFavourite != null) {
+        dispatch(isFavourite ? increaseFavouritesCountPatchAction() : decreaseFavouritesCountPatchAction());
       }
-    } catch (e) {}
+
+      if (isSpam != null) {
+        dispatch(increaseSpamCountPatchAction());
+      }
+
+      if (isTrash != null) {
+        dispatch(increaseTrashCountPatchAction());
+      }
+    } catch (e) {
+      notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
+    } finally {
+      dispatch(setInProgressAction(false));
+    }
   };
 
   return (
     <SplitPanels
       autoSaveId="inbox"
       leftElement={
-        <>
+        <Scrollable maxHeight="calc(100vh - 12.875rem)">
           <Header />
 
           <MessagePreviewList
@@ -70,9 +101,10 @@ export const InboxPage = () => {
             onOpen={message => dispatch(openMessageAction(message))}
             onCachedApiArgs={setListCachedArgs}
             onManagePreferences={updatePreferences}
+            onRefresh={refreshCounts}
             renderFilterElement={change => <Filter onChange={change} />}
           />
-        </>
+        </Scrollable>
       }
       rightElement={
         openedMessage ? (
@@ -82,6 +114,8 @@ export const InboxPage = () => {
             onClose={closeMessage}
             onCachedApiArgs={setThreadCachedArgs}
             onManagePreferences={updatePreferences}
+            replyIsDisplayed
+            onReply={handleReply}
           />
         ) : null
       }

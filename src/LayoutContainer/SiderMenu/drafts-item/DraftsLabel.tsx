@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { NavLinkContent } from '../NavLinkContent';
 import { SiderMenuLabelProps } from '../types';
-import { getDraftsCountStoreQueryArgs } from '@/utils';
+import { getDraftsCountQueryArgs } from '@/store';
 import { useDraftControllerGetCountQuery } from '@/store/api/draft-api';
 
 export const DraftsLabel = ({ path }: SiderMenuLabelProps) => {
-  const { data: totalCount } = useDraftControllerGetCountQuery(getDraftsCountStoreQueryArgs());
+  const { data: totalCount } = useDraftControllerGetCountQuery(getDraftsCountQueryArgs());
 
   return (
     <NavLink to={path}>

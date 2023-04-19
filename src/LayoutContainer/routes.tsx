@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { InboxPage } from '@/pages/InboxPage';
 import { SentPage } from '@/pages/SentPage';
-import { appRoutePath } from '@/configs';
+import { AppRoutePath } from '@/configs';
 import { DraftsPage } from '@/pages/DraftstPage';
 import { FavouritesPage } from '@/pages/FavouritesPage';
 import { SpamPage } from '@/pages/SpamPage';
@@ -14,33 +14,33 @@ export const LayoutRoutes = () => {
         index
         element={
           <Navigate
-            to={appRoutePath.INBOX}
+            to={AppRoutePath.INBOX}
             replace
           />
         }
       />
       <Route
-        path={appRoutePath.INBOX}
+        path={AppRoutePath.INBOX}
         element={<InboxPage />}
       />
       <Route
-        path={appRoutePath.SENT}
+        path={AppRoutePath.SENT}
         element={<SentPage />}
       />
       <Route
-        path={appRoutePath.DRAFTS}
+        path={AppRoutePath.DRAFTS}
         element={<DraftsPage />}
       />
       <Route
-        path={appRoutePath.FAVOURITES}
+        path={AppRoutePath.FAVOURITES}
         element={<FavouritesPage />}
       />
       <Route
-        path={appRoutePath.SPAM}
+        path={AppRoutePath.SPAM}
         element={<SpamPage />}
       />
       <Route
-        path={appRoutePath.TRASH}
+        path={AppRoutePath.TRASH}
         element={<TrashPage />}
       />
     </Routes>

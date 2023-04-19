@@ -6,7 +6,7 @@ import { theme } from 'antd';
 import { useMessageControllerGetCountQuery } from '@/store/api/message-api';
 import { useContext, useMemo } from 'react';
 import { AuthContext } from '@/context/AuthContext';
-import { getInboxCountStoreQueryArgs, getUnreadCountStoreQueryArgs } from '@/utils';
+import { getInboxCountQueryArgs, getUnreadCountQueryArgs } from '@/store';
 
 const { useToken } = theme;
 const title = 'Inbox';
@@ -19,8 +19,8 @@ export const InboxLabel = ({ path }: SiderMenuLabelProps) => {
 
   const { user } = useContext(AuthContext);
 
-  const { data: totalCount } = useMessageControllerGetCountQuery(getInboxCountStoreQueryArgs(user.email));
-  const { data: unreadCount } = useMessageControllerGetCountQuery(getUnreadCountStoreQueryArgs(user.email));
+  const { data: totalCount } = useMessageControllerGetCountQuery(getInboxCountQueryArgs(user.email));
+  const { data: unreadCount } = useMessageControllerGetCountQuery(getUnreadCountQueryArgs(user.email));
 
   const unreadCountDisplayed = useMemo(
     () => (unreadCount && unreadCount > maxUnreadDisplayed ? `${maxUnreadDisplayed}+` : unreadCount),

@@ -16,6 +16,7 @@ export const MessagePreviewList = ({
   onOpen,
   onManagePreferences,
   onCachedApiArgs,
+  onRefresh,
 }: MessagePreviewListProps) => {
   const predefineReqArgs = useMemo(() => getPredefinedReqArgs(specificReqArgs), [specificReqArgs]);
 
@@ -34,6 +35,11 @@ export const MessagePreviewList = ({
     getMessages({ ...predefineReqArgs, ...originalArgs, page: 0, ...values });
   };
 
+  const refresh = () => {
+    getMessages(originalArgs);
+    onRefresh();
+  };
+
   return (
     <>
       {renderFilterElement(applyFilter)}
@@ -49,7 +55,7 @@ export const MessagePreviewList = ({
             sort={messagesRes.sort}
             onPaginate={(page, size) => getMessages({ ...originalArgs, page, size })}
             onChangeSort={val => getMessages({ ...originalArgs, sort: val })}
-            onRefresh={() => getMessages(originalArgs)}
+            onRefresh={refresh}
           />
 
           {!messagesRes.content.length ? (

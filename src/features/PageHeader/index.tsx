@@ -14,10 +14,13 @@ export const PageHeader = ({ title, totalCount, extraInfo }: PageHeaderProps) =>
   } = useToken();
 
   return (
-    <ContentBlock transparent>
+    <ContentBlock
+      transparent
+      className={styles.root}
+    >
       <Title
         level={5}
-        className={styles.root}
+        className={styles.heading}
       >
         {title}
       </Title>

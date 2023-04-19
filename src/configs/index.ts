@@ -1,2 +1,3 @@
-export { appRoutePath } from './app-route-path';
-export { LocalStorageKeys } from './local-storage-keys';
+export { AppRoutePath } from './appRoutePath';
+export { LocalStorageKeys } from './localStorageKeys';
+export { NotificationConfig } from './notification';

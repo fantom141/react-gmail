@@ -1,0 +1,18 @@
+.reply {
+  position: sticky;
+  bottom: 0;
+  margin-top: 0.5rem;
+}
+
+.opened {
+  animation: blink 600ms ease-in;
+}
+
+@keyframes blink {
+  20% {
+    background-color: var(--color-primary-bg);
+  }
+  100% {
+    background-color: var(--color-bg-container);
+  }
+}

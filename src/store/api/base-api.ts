@@ -41,4 +41,5 @@ export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
+  keepUnusedDataFor: 0,
 });

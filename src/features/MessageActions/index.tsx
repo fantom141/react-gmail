@@ -112,13 +112,15 @@ export const MessageActions = ({
         onClick={() => onManagePreferences({ isRead: !isRead })}
       ></Button>
 
-      <Button
-        type="text"
-        size="small"
-        icon={isSpam ? toNotSpamIcon : toSpamIcon}
-        className={classNames}
-        onClick={() => onManagePreferences({ isSpam: !isSpam })}
-      ></Button>
+      {!isTrash && (
+        <Button
+          type="text"
+          size="small"
+          icon={isSpam ? toNotSpamIcon : toSpamIcon}
+          className={classNames}
+          onClick={() => onManagePreferences({ isSpam: !isSpam })}
+        ></Button>
+      )}
 
       <Button
         type="text"
@@ -128,13 +130,15 @@ export const MessageActions = ({
         onClick={() => onManagePreferences({ isTrash: !isTrash })}
       ></Button>
 
-      <Button
-        type="text"
-        size="small"
-        icon={isFavourite ? toNotFavouriteIcon : toFavouriteIcon}
-        className={`${classNames} ${isFavourite && styles.itemIsDisplayed}`}
-        onClick={() => onManagePreferences({ isFavourite: !isFavourite })}
-      ></Button>
+      {!isSpam && !isTrash && (
+        <Button
+          type="text"
+          size="small"
+          icon={isFavourite ? toNotFavouriteIcon : toFavouriteIcon}
+          className={`${classNames} ${isFavourite && styles.itemIsDisplayed}`}
+          onClick={() => onManagePreferences({ isFavourite: !isFavourite })}
+        ></Button>
+      )}
     </Space>
   );
 };

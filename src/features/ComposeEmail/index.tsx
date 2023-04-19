@@ -4,12 +4,12 @@ import { Button, Card, notification } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { Form } from './Form';
 import { ComposeEmailFormValues, ComposeEmailProps, SaveAsDraftFormValues } from './types';
-import { enhancedApi as messageApi, useMessageControllerCreateMessageMutation } from '@/store/api/message-api';
-import { enhancedApi as draftApi, useDraftControllerCreateDraftMutation } from '@/store/api/draft-api';
+import { useMessageControllerCreateMessageMutation } from '@/store/api/message-api';
+import { useDraftControllerCreateDraftMutation } from '@/store/api/draft-api';
 import { useDispatch } from 'react-redux';
-import { getDraftsCountStoreQueryArgs, getSentCountStoreQueryArgs } from '@/utils';
+import { AppDispatch, getDraftCountRefreshAction, getSentCountRefreshAction } from '@/store';
 import { AuthContext } from '@/context/AuthContext';
-import { AppDispatch } from '@/store';
+import { NotificationConfig } from '@/configs';
 
 export const ComposeEmail = ({ onClose, ...props }: ComposeEmailProps) => {
   const { className, ...restProps } = props;
@@ -22,22 +22,22 @@ export const ComposeEmail = ({ onClose, ...props }: ComposeEmailProps) => {
   const send = async (data: ComposeEmailFormValues) => {
     try {
       await sendMessage({ createMessageDto: data }).unwrap();
-      await dispatch(messageApi.util.prefetch('messageControllerGetCount', getSentCountStoreQueryArgs(user.email), { force: true }));
-      notification.success({ message: 'Successfully sent', placement: 'bottom' });
+      await dispatch(getSentCountRefreshAction(user.email));
+      notification.success({ message: NotificationConfig.message.SENT, placement: NotificationConfig.placement });
       onClose();
     } catch (e) {
-      notification.error({ message: 'Something went wrong', placement: 'bottom' });
+      notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
     }
   };
 
   const saveAsDraft = async (data: SaveAsDraftFormValues) => {
     try {
       await saveMessageAsDraft({ upsertDraftDto: data }).unwrap();
-      await dispatch(draftApi.util.prefetch('draftControllerGetCount', getDraftsCountStoreQueryArgs(), { force: true }));
-      notification.success({ message: 'Successfully saved as draft', placement: 'bottom' });
+      await dispatch(getDraftCountRefreshAction());
+      notification.success({ message: NotificationConfig.message.SENT, placement: NotificationConfig.placement });
       onClose();
     } catch (e) {
-      notification.error({ message: 'Something went wrong', placement: 'bottom' });
+      notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
     }
   };
 

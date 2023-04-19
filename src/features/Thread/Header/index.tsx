@@ -1,3 +1,4 @@
+import styles from './styles.module.scss';
 import { Button, Row, Space } from 'antd';
 import { ArrowLeftOutlined, DeleteOutlined, PrinterOutlined } from '@ant-design/icons';
 import { ContentBlock } from '@/components/ContentBlock';
@@ -5,7 +6,10 @@ import { HeaderProps } from './types';
 
 export const Header = ({ onClose }: HeaderProps) => {
   return (
-    <ContentBlock transparent>
+    <ContentBlock
+      transparent
+      className={styles.root}
+    >
       <Row justify="space-between">
         <Button
           type="text"

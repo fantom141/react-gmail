@@ -19,6 +19,7 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
       colorTextQuaternary,
       colorBorder,
       borderRadius,
+      borderRadiusLG,
       motionEaseInOut,
       motionDurationSlow,
     },
@@ -36,6 +37,7 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
     domStyle.setProperty('--color-text-quaternary', colorTextQuaternary);
     domStyle.setProperty('--color-border', colorBorder);
     domStyle.setProperty('--border-radius', `${borderRadius}px`);
+    domStyle.setProperty('--border-radius-lg', `${borderRadiusLG}px`);
     domStyle.setProperty('--motion-ease-in-out', motionEaseInOut);
     domStyle.setProperty('--motion-duration-slow', motionDurationSlow);
   }, [
@@ -51,6 +53,7 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
     colorTextTertiary,
     colorTextQuaternary,
     borderRadius,
+    borderRadiusLG,
     motionEaseInOut,
     motionDurationSlow,
   ]);

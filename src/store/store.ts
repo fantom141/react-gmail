@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authSlice } from './auth';
 import { baseApi } from './api/base-api';
 import { messageSlice } from './message';
+import { commonSlice } from '@/store/common';
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     [authSlice.name]: authSlice.reducer,
     [messageSlice.name]: messageSlice.reducer,
+    [commonSlice.name]: commonSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
   devTools: true,

@@ -7,6 +7,7 @@ import { ComposeEmail } from '@/features/ComposeEmail';
 import { AuthTokenInitializer } from './AuthTokenInitializer';
 import { localStorageService } from '@/services';
 import { LocalStorageKeys } from '@/configs';
+import { ProgressLine } from './ProgressLine';
 
 const { Content } = Layout;
 
@@ -26,7 +27,12 @@ export const LayoutContainer = () => {
 
   return (
     <AuthTokenInitializer>
-      <Layout hasSider>
+      <Layout
+        hasSider
+        className={styles.root}
+      >
+        <ProgressLine className={styles.progressLine} />
+
         <LayoutSider
           collapsed={siderCollapsed}
           onCollapsedChange={() => changeCollapsedState(!siderCollapsed)}
