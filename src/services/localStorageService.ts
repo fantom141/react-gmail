@@ -1,4 +1,4 @@
-export const localStorageService = {
+export const localStorageService = Object.freeze({
   get: (key: string): any | null => {
     try {
       return JSON.parse(window.localStorage[key]);
@@ -14,4 +14,4 @@ export const localStorageService = {
   remove: (key: string): void => {
     window.localStorage.removeItem(key);
   },
-};
+});

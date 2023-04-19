@@ -2,9 +2,9 @@ import styles from './styles.module.scss';
 import { Header } from './Header';
 import { ThreadProps } from './types';
 import { MessageDto, useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
-import { List } from 'antd';
+import { Button, List } from 'antd';
 import { useEffect, useRef } from 'react';
-import { getPredefinedReqArgs, getReplyPatchAction } from './utils';
+import { getPredefinedReqArgs, getReplyPatchAction, THREAD_LIST_ID } from './utils';
 import { MessageDetails } from '@/features/MessageDetails';
 import { MessageDetailsListSkeleton } from '@/features/MessageDetailsListSkeleton';
 import { MessageActions } from '@/features/MessageActions';
@@ -12,6 +12,8 @@ import { Reply } from './Reply';
 import { Scrollable, ScrollableRef } from '@/components/Scrollable';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
+import { printService } from '@/services';
+import { PrinterOutlined } from '@ant-design/icons';
 
 export const Thread = ({
   specificReqArgs,
@@ -48,9 +50,16 @@ export const Thread = ({
     onReply(message);
   };
 
+  const print = (el: HTMLElement) => {
+    printService.printContent(el);
+  };
+
   return (
     <>
-      <Header onClose={onClose} />
+      <Header
+        onClose={onClose}
+        onPrint={() => print(document.getElementById(THREAD_LIST_ID))}
+      />
 
       {isFetching || !messagesRes ? (
         <MessageDetailsListSkeleton />
@@ -62,19 +71,30 @@ export const Thread = ({
           <List
             itemLayout="horizontal"
             dataSource={messagesRes.content}
+            id={THREAD_LIST_ID}
             renderItem={item => (
               <MessageDetails
                 data={item}
                 isOpened={item.messageId === openedMessage.messageId}
                 renderActionsElement={
-                  <MessageActions
-                    isRead={item.isRead}
-                    isFavourite={item.isFavourite}
-                    isSpam={item.isSpam}
-                    isTrash={item.isTrash}
-                    isDisplayed
-                    onManagePreferences={prefs => onManagePreferences(item.messageId, prefs)}
-                  />
+                  <>
+                    <Button
+                      size="small"
+                      type="text"
+                      icon={<PrinterOutlined />}
+                      className={styles.printMessage}
+                      onClick={() => print(document.getElementById(`${item.messageId}`))}
+                    />
+
+                    <MessageActions
+                      isRead={item.isRead}
+                      isFavourite={item.isFavourite}
+                      isSpam={item.isSpam}
+                      isTrash={item.isTrash}
+                      isDisplayed
+                      onManagePreferences={prefs => onManagePreferences(item.messageId, prefs)}
+                    />
+                  </>
                 }
               />
             )}

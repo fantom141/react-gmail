@@ -8,6 +8,10 @@
   animation: blink 600ms ease-in;
 }
 
+.printMessage {
+  margin-right: 0.125rem;
+}
+
 @keyframes blink {
   20% {
     background-color: var(--color-primary-bg);

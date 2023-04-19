@@ -15,3 +15,5 @@ export const getReplyPatchAction = (message: MessageDto, args: MessageController
   messageApi.util.updateQueryData('messageControllerGetMessages', args, draft => {
     draft.content.push(message);
   });
+
+export const THREAD_LIST_ID = 'thread-list';
