@@ -1,0 +1,10 @@
+.ant-notification {
+  &-notice-message {
+    margin-bottom: 0 !important;
+    font-weight: 500;
+  }
+
+  &-notice-description:not(:empty) {
+    margin-top: 0.5rem;
+  }
+}
