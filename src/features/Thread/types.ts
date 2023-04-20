@@ -6,6 +6,7 @@ export interface ThreadProps {
   onClose: () => void;
   onManagePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
   onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
+  onBatchTrash: (messageIds: number[]) => void;
   replyIsDisplayed?: boolean;
   onReply?: (message: MessageDto) => void;
 }

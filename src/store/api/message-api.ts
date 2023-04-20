@@ -45,7 +45,7 @@ const injectedRtkApi = api.injectEndpoints({
       MessageControllerManagePreferencesApiResponse,
       MessageControllerManagePreferencesApiArg
     >({
-      query: queryArg => ({ url: `/messages/${queryArg.messageId}/preferences`, method: 'PUT', body: queryArg.messagePreferencesDto }),
+      query: queryArg => ({ url: `/messages/preferences`, method: 'PUT', body: queryArg.body }),
     }),
   }),
   overrideExisting: false,
@@ -86,10 +86,9 @@ export type MessageControllerGetCountApiArg = {
   isRead?: boolean;
   isTrash?: boolean;
 };
-export type MessageControllerManagePreferencesApiResponse = /** status 200  */ MessageDto;
+export type MessageControllerManagePreferencesApiResponse = /** status 200  */ MessageDto[];
 export type MessageControllerManagePreferencesApiArg = {
-  messageId: number;
-  messagePreferencesDto: MessagePreferencesDto;
+  body: ManageMessagePreferencesDto[];
 };
 export type UserDto = {
   email: string;
@@ -132,6 +131,10 @@ export type MessagePreferencesDto = {
   isSpam?: boolean;
   isRead?: boolean;
   isTrash?: boolean;
+};
+export type ManageMessagePreferencesDto = {
+  messageId: number;
+  preferences: MessagePreferencesDto;
 };
 export const {
   useMessageControllerGetMessagesQuery,

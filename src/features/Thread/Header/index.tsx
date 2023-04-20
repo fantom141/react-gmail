@@ -4,7 +4,7 @@ import { ArrowLeftOutlined, DeleteOutlined, PrinterOutlined } from '@ant-design/
 import { ContentBlock } from '@/components/ContentBlock';
 import { HeaderProps } from './types';
 
-export const Header = ({ onClose, onPrint }: HeaderProps) => {
+export const Header = ({ onClose, onPrint, onTrash }: HeaderProps) => {
   return (
     <ContentBlock
       transparent
@@ -29,6 +29,7 @@ export const Header = ({ onClose, onPrint }: HeaderProps) => {
             size="small"
             type="text"
             icon={<DeleteOutlined />}
+            onClick={onTrash}
           />
         </Space>
       </Row>

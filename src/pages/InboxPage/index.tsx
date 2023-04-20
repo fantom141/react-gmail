@@ -4,8 +4,10 @@ import {
   AppDispatch,
   closeMessageAction,
   decreaseFavouritesCountPatchAction,
+  decreaseInboxCountPatchAction,
   decreaseUnreadCountPatchAction,
   getInboxCountRefreshAction,
+  getMessagesRefreshAction,
   getUnreadCountRefreshAction,
   increaseFavouritesCountPatchAction,
   increaseSentCountPatchAction,
@@ -61,7 +63,7 @@ export const InboxPage = () => {
     const { isRead, isFavourite, isSpam, isTrash } = prefs;
     try {
       dispatch(setInProgressAction(true));
-      await managePreferences({ messageId, messagePreferencesDto: prefs }).unwrap();
+      await managePreferences({ body: [{ messageId, preferences: prefs }] }).unwrap();
 
       dispatch(getInboxListPatchAction(messageId, prefs, listCachedArgs));
       threadCachedArgs && dispatch(getInboxListPatchAction(messageId, prefs, threadCachedArgs));
@@ -88,6 +90,24 @@ export const InboxPage = () => {
     }
   };
 
+  const batchTrash = async (messageIds: number[]) => {
+    try {
+      dispatch(setInProgressAction(true));
+
+      await managePreferences({ body: messageIds.map(messageId => ({ messageId, preferences: { isTrash: true } })) }).unwrap();
+      closeMessage();
+      dispatch(increaseTrashCountPatchAction(messageIds.length));
+      dispatch(decreaseInboxCountPatchAction(user.email, messageIds.length));
+      dispatch(getUnreadCountRefreshAction(user.email));
+
+      await dispatch(getMessagesRefreshAction(listCachedArgs));
+    } catch (e) {
+      notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
+    } finally {
+      dispatch(setInProgressAction(false));
+    }
+  };
+
   return (
     <SplitPanels
       autoSaveId="inbox"
@@ -96,7 +116,7 @@ export const InboxPage = () => {
           <Header />
 
           <MessagePreviewList
-            specificReqArgs={{ recipientEmail: user.email }}
+            specificReqArgs={{ recipientEmail: user.email, isSpam: false, isTrash: false }}
             openedMessage={openedMessage}
             onOpen={message => dispatch(openMessageAction(message))}
             onCachedApiArgs={setListCachedArgs}
@@ -116,6 +136,7 @@ export const InboxPage = () => {
             onManagePreferences={updatePreferences}
             replyIsDisplayed
             onReply={handleReply}
+            onBatchTrash={batchTrash}
           />
         ) : null
       }

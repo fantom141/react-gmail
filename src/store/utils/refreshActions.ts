@@ -12,3 +12,5 @@ export const getDraftCountRefreshAction = () => getDraftCountsAction(getDraftsCo
 export const getFavouritesCountRefreshAction = () => getMessageCountsAction(getFavouritesCountQueryArgs());
 export const getSpamCountRefreshAction = () => getMessageCountsAction(getSpamCountQueryArgs());
 export const getTrashCountRefreshAction = () => getMessageCountsAction(getTrashCountQueryArgs());
+
+export const getMessagesRefreshAction = (args: MessageControllerGetMessagesApiArg) => messageApi.util.prefetch('messageControllerGetMessages', args, {force: true});

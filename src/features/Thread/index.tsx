@@ -23,10 +23,11 @@ export const Thread = ({
   onManagePreferences,
   onCachedApiArgs,
   onReply,
+  onBatchTrash,
 }: ThreadProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const scrollableRef = useRef<ScrollableRef>();
-  const [getMessages, { data: messagesRes, isFetching, originalArgs }] = useLazyMessageControllerGetMessagesQuery();
+  const [getMessages, { data: messagesRes, isFetching, originalArgs, fulfilledTimeStamp }] = useLazyMessageControllerGetMessagesQuery();
 
   useEffect(() => {
     getMessages(getPredefinedReqArgs(openedMessage.threadId, specificReqArgs));
@@ -37,12 +38,12 @@ export const Thread = ({
   }, [originalArgs]);
 
   useEffect(() => {
-    if (messagesRes && openedMessage.threadId === originalArgs.threadId) {
+    if (fulfilledTimeStamp && openedMessage.threadId === originalArgs.threadId) {
       const el = scrollableRef.current.scrollByIdAttr(`${openedMessage.messageId}`);
       el.onanimationend = () => el.classList.remove(styles.opened);
       el.classList.add(styles.opened);
     }
-  }, [openedMessage.messageId, messagesRes]);
+  }, [openedMessage.messageId, fulfilledTimeStamp]);
 
   const handleReply = (message: MessageDto) => {
     dispatch(getReplyPatchAction(message, originalArgs));
@@ -54,11 +55,17 @@ export const Thread = ({
     printService.printContent(el);
   };
 
+  const batchTrash = () => {
+    const messageIds = messagesRes.content.map(({ messageId }) => messageId);
+    onBatchTrash(messageIds);
+  };
+
   return (
     <>
       <Header
         onClose={onClose}
         onPrint={() => print(document.getElementById(THREAD_LIST_ID))}
+        onTrash={batchTrash}
       />
 
       {isFetching || !messagesRes ? (
