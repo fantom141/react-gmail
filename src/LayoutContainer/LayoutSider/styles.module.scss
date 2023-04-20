@@ -4,6 +4,7 @@
   top: 0;
   bottom: 0;
   height: 100vh;
+  background: var(--color-surface-darker) !important;
 }
 
 .content {
@@ -25,6 +26,6 @@
 
   &,
   &:hover {
-    background-color: #fefefe !important;
+    background-color: var(--color-bg-elevated) !important;
   }
 }

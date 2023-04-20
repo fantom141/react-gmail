@@ -5,6 +5,7 @@ import { Avatar, Space, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Logout } from '../Logout';
 import { UserInfoProps } from './types';
+import { ColorSchemeSwitcher } from '@/features/ColorSchemeSwitcher';
 
 const { Title, Text } = Typography;
 
@@ -17,29 +18,30 @@ export const UserInfo = ({ collapsed }: UserInfoProps) => {
 
   return (
     <div className={styles.root}>
-      <Space>
-        <Avatar
-          size="large"
-          icon={<UserOutlined />}
-        />
+      <Avatar
+        size="large"
+        icon={<UserOutlined />}
+      />
 
-        <Space
-          direction="vertical"
-          size={0}
+      <Space
+        direction="vertical"
+        size={0}
+        className={styles.info}
+      >
+        <Title
+          level={5}
+          ellipsis
+          className={styles.title}
         >
-          <Title
-            level={5}
-            ellipsis
-            className={styles.title}
-          >
-            {user?.displayName || 'No display name'}
-          </Title>
+          {user?.displayName || 'No display name'}
+        </Title>
 
-          <Text type="secondary">{user?.email}</Text>
-        </Space>
-
-        <Logout />
+        <Text type="secondary">{user?.email}</Text>
       </Space>
+
+      <ColorSchemeSwitcher />
+
+      <Logout />
     </div>
   );
 };

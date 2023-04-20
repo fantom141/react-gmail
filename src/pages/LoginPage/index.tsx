@@ -1,8 +1,10 @@
+import styles from './styles.module.scss';
 import { Col, Row, Typography } from 'antd';
 import mailbox from '@/assets/mailbox.svg';
 import { LoginForm } from './LoginForm';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { ColorSchemeSwitcher } from '@/features/ColorSchemeSwitcher';
 
 const { Title } = Typography;
 
@@ -13,16 +15,20 @@ export const LoginPage = () => {
     <Row
       justify="center"
       align="middle"
-      style={{ height: '100vh' }}
+      className={styles.root}
     >
       <Col span={12}>
         <Row justify="center">
           <Col span={12}>
             <Title
               level={2}
-              style={{ textAlign: 'center' }}
+              className={styles.title}
             >
-              Log in
+              Log In
+              <ColorSchemeSwitcher
+                size="small"
+                className={styles.colorSchemeSwitcher}
+              />
             </Title>
 
             <LoginForm onSuccess={() => navigate('/')}></LoginForm>
@@ -32,17 +38,17 @@ export const LoginPage = () => {
 
       <Col
         span={12}
-        style={{ height: '100%', backgroundColor: '#F4F6F8' }}
+        className={styles.rightCol}
       >
         <Row
           align="middle"
           justify="center"
-          style={{ height: '100%' }}
+          className={styles.rightRow}
         >
           <img
             src={mailbox}
             alt=""
-            style={{ height: '10rem' }}
+            className={styles.img}
           />
         </Row>
       </Col>

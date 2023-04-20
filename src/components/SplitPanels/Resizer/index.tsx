@@ -9,10 +9,7 @@ export const Resizer = () => {
   } = useToken();
 
   return (
-    <div
-      className={styles.root}
-      data-background="red"
-    >
+    <div className={styles.root}>
       <div
         className={styles.separator}
         style={{ backgroundColor: colorBorderSecondary }}

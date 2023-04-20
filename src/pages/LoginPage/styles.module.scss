@@ -1,0 +1,29 @@
+.root {
+  height: 100vh;
+  background-color: var(--color-bg-container);
+}
+
+.title {
+  text-align: center;
+}
+
+.colorSchemeSwitcher {
+  position: absolute;
+  margin-left: 0.5rem;
+  margin-top: 0.625rem;
+}
+
+.right {
+  &Col,
+  &Row {
+    height: 100%;
+  }
+
+  &Col {
+    background-color: var(--color-bg-layout);
+  }
+}
+
+.img {
+  height: 10rem;
+}

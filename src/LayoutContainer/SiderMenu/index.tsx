@@ -1,3 +1,4 @@
+import styles from './styles.module.scss';
 import { Menu } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
@@ -15,9 +16,11 @@ export const SiderMenu = ({ collapsed }: SiderMenuProps) => {
   const selectedKey = items.find(({ key }) => location.pathname.includes(key as string))?.key as string;
 
   return (
-    <Menu
-      items={items}
-      selectedKeys={selectedKey ? [selectedKey] : null}
-    />
+    <div className={styles.root}>
+      <Menu
+        items={items}
+        selectedKeys={selectedKey ? [selectedKey] : null}
+      />
+    </div>
   );
 };

@@ -1,3 +1,4 @@
+import styles from './styles.module.scss';
 import { Row, Spin } from 'antd';
 import React from 'react';
 
@@ -6,9 +7,9 @@ export const AppLoading = () => {
     <Row
       align="middle"
       justify="center"
-      style={{ height: '100vh' }}
+      className={styles.root}
     >
       <Spin size="large"></Spin>
     </Row>
-  )
-}
+  );
+};

@@ -1,14 +1,18 @@
 import { PropsWithChildren, useEffect, useMemo } from 'react';
 import { ConfigProvider, theme } from 'antd';
+import { useSelector } from 'react-redux';
+import { ColorSchemes, colorSchemeSelector } from '@/store';
 
-const { useToken } = theme;
+const { useToken, darkAlgorithm, defaultAlgorithm } = theme;
 
-const CssVarsByTheme = ({ children }: PropsWithChildren) => {
+const CssVarsByTheme = ({ scheme, children }: PropsWithChildren<{ scheme: ColorSchemes }>) => {
   const domStyle = useMemo(() => document.documentElement.style, []);
 
   const {
     token: {
+      colorBgLayout,
       colorBgContainer,
+      colorBgElevated,
       colorBgBase,
       colorPrimary,
       colorPrimaryBorder,
@@ -26,7 +30,9 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
   } = useToken();
 
   useEffect(() => {
+    domStyle.setProperty('--color-bg-layout', colorBgLayout);
     domStyle.setProperty('--color-bg-container', colorBgContainer);
+    domStyle.setProperty('--color-bg-elevated', colorBgElevated);
     domStyle.setProperty('--color-bg-base', colorBgBase);
     domStyle.setProperty('--color-primary', colorPrimary);
     domStyle.setProperty('--color-primary-border', colorPrimaryBorder);
@@ -40,9 +46,13 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
     domStyle.setProperty('--border-radius-lg', `${borderRadiusLG}px`);
     domStyle.setProperty('--motion-ease-in-out', motionEaseInOut);
     domStyle.setProperty('--motion-duration-slow', motionDurationSlow);
+
+    domStyle.setProperty('--color-surface-darker', scheme === ColorSchemes.LIGHT ? '#F4F6F8' : colorBgContainer);
   }, [
     domStyle,
+    colorBgLayout,
     colorBgContainer,
+    colorBgElevated,
     colorBgBase,
     colorPrimary,
     colorPrimaryBorder,
@@ -62,9 +72,12 @@ const CssVarsByTheme = ({ children }: PropsWithChildren) => {
 };
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
+  const scheme = useSelector(colorSchemeSelector);
+
   return (
     <ConfigProvider
       theme={{
+        algorithm: scheme === ColorSchemes.LIGHT ? defaultAlgorithm : darkAlgorithm,
         token: {
           // seed tokens
           colorPrimary: '#0051fe',
@@ -75,17 +88,17 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
           colorText: '#686D79', // for Title color set in index.css
           colorTextBase: '#686D79',
           colorIcon: '#686D79',
-          colorBgContainer: '#fefefe',
-          colorBgElevated: '#fefefe',
-          colorBgLayout: '#fbfbfb',
-          colorBorderSecondary: '#e9e9e9',
+          colorBgContainer: scheme === ColorSchemes.LIGHT ? '#fefefe' : '#1d1d1d',
+          colorBgElevated: scheme === ColorSchemes.LIGHT ? '#fefefe' : '#1f1f1f',
+          colorBgLayout: scheme === ColorSchemes.LIGHT ? '#fbfbfb' : '#121212',
+          colorBorderSecondary: scheme === ColorSchemes.LIGHT ? '#e9e9e9' : '#424242',
         },
         components: {
           Typography: {
             colorTextDescription: '#686D79A6',
           },
           Tooltip: {
-            colorBgDefault: '#686D79',
+            colorBgDefault: scheme === ColorSchemes.LIGHT ? '#686D79' : '#1f1f1f',
             fontSize: 12,
             sizePopupArrow: 0,
           },
@@ -95,7 +108,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
       input={{ autoComplete: 'off' }}
       form={{ requiredMark: false }}
     >
-      <CssVarsByTheme>{children}</CssVarsByTheme>
+      <CssVarsByTheme scheme={scheme}>{children}</CssVarsByTheme>
     </ConfigProvider>
   );
 };
