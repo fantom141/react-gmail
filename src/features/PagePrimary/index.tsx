@@ -27,11 +27,11 @@ import {
   useMessageControllerManagePreferencesMutation,
 } from '@/store/api/message-api';
 import { useEffect, useState } from 'react';
-import { Scrollable } from '@/components/Scrollable';
 import { notification } from 'antd';
 import { NotificationConfig } from '@/configs';
 import { PagePrimaryProps } from '@/features/PagePrimary/types';
 import { getListPatchAction } from '@/features/PagePrimary/utils';
+import { emitterService } from '@/services';
 
 export const PagePrimary = ({
   user,
@@ -40,14 +40,22 @@ export const PagePrimary = ({
   headerElement,
   filterRenderElement,
   onRefresh,
-  onReply,
+  onMessageSent,
 }: PagePrimaryProps) => {
   const [listCachedArgs, setListCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [threadCachedArgs, setThreadCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [openedMessage, setOpenedMessage] = useState<MessageDto>();
   const [managePreferences] = useMessageControllerManagePreferencesMutation();
   const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => () => closeMessage(), []);
+
+  useEffect(() => {
+    emitterService.on('MESSAGE_SENT', (message: MessageDto) => onMessageSent(message, listCachedArgs));
+    return () => {
+      emitterService.off('MESSAGE_SENT');
+    };
+  }, [listCachedArgs]);
 
   const closeMessage = () => {
     setOpenedMessage(null);
@@ -56,7 +64,7 @@ export const PagePrimary = ({
 
   const handleReply = (message: MessageDto) => {
     dispatch(increaseSentCountPatchAction(user.email));
-    onReply(message, listCachedArgs);
+    onMessageSent(message, listCachedArgs);
   };
 
   const updatePreferences = async ({ messageId, sender, recipient }: MessageDto, prefs: MessagePreferencesDto) => {
@@ -136,17 +144,15 @@ export const PagePrimary = ({
         <>
           {headerElement}
 
-          <Scrollable maxHeight="calc(100vh - 12.875rem)">
-            <MessagePreviewList
-              specificReqArgs={listSpecificReqArgs}
-              openedMessage={openedMessage}
-              onOpen={message => setOpenedMessage(message)}
-              onCachedApiArgs={setListCachedArgs}
-              onManagePreferences={updatePreferences}
-              onRefresh={onRefresh}
-              renderFilterElement={filterRenderElement}
-            />
-          </Scrollable>
+          <MessagePreviewList
+            specificReqArgs={listSpecificReqArgs}
+            openedMessage={openedMessage}
+            onOpen={message => setOpenedMessage(message)}
+            onCachedApiArgs={setListCachedArgs}
+            onManagePreferences={updatePreferences}
+            onRefresh={onRefresh}
+            renderFilterElement={filterRenderElement}
+          />
         </>
       }
       rightElement={

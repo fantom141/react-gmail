@@ -27,7 +27,7 @@ export const SentPage = () => {
       headerElement={<Header />}
       filterRenderElement={change => <Filter onChange={change} />}
       onRefresh={refreshCounts}
-      onReply={refreshList}
+      onMessageSent={refreshList}
     />
   );
 };

@@ -9,5 +9,5 @@ export interface PagePrimaryProps {
   headerElement: ReactElement;
   filterRenderElement: (change: (values: MessageControllerGetMessagesApiArg) => void) => ReactElement;
   onRefresh: () => void;
-  onReply?: (message: MessageDto, listCachedArgs: MessageControllerGetMessagesApiArg) => void;
+  onMessageSent?: (message: MessageDto, listCachedArgs: MessageControllerGetMessagesApiArg) => void;
 }

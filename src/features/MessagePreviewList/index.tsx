@@ -8,6 +8,7 @@ import { MessageListEmpty } from '@/features/MessageListEmpty';
 import { MessagePreview } from '@/features/MessagePreview';
 import { List } from 'antd';
 import { MessageActions } from '@/features/MessageActions';
+import { Scrollable } from '@/components/Scrollable';
 
 export const MessagePreviewList = ({
   specificReqArgs,
@@ -66,27 +67,29 @@ export const MessagePreviewList = ({
           {!messagesRes.content.length ? (
             <MessageListEmpty />
           ) : (
-            <List
-              itemLayout="horizontal"
-              dataSource={messagesRes.content}
-              renderItem={item => (
-                <MessagePreview
-                  data={item}
-                  isOpened={item.messageId === openedMessage?.messageId}
-                  onClick={() => openMessage(item)}
-                  renderActionsElement={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
-                    <MessageActions
-                      isRead={isRead}
-                      isFavourite={isFavourite}
-                      isTrash={isTrash}
-                      isSpam={isSpam}
-                      isDisplayed={cursorOver}
-                      onManagePreferences={prefs => onManagePreferences(item, prefs)}
-                    />
-                  )}
-                />
-              )}
-            ></List>
+            <Scrollable maxHeight="calc(100vh - 12.875rem)">
+              <List
+                itemLayout="horizontal"
+                dataSource={messagesRes.content}
+                renderItem={item => (
+                  <MessagePreview
+                    data={item}
+                    isOpened={item.messageId === openedMessage?.messageId}
+                    onClick={() => openMessage(item)}
+                    renderActionsElement={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
+                      <MessageActions
+                        isRead={isRead}
+                        isFavourite={isFavourite}
+                        isTrash={isTrash}
+                        isSpam={isSpam}
+                        isDisplayed={cursorOver}
+                        onManagePreferences={prefs => onManagePreferences(item, prefs)}
+                      />
+                    )}
+                  />
+                )}
+              ></List>
+            </Scrollable>
           )}
         </>
       )}

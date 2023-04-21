@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, getDraftCountRefreshAction, getSentCountRefreshAction } from '@/store';
 import { AuthContext } from '@/context/AuthContext';
 import { NotificationConfig } from '@/configs';
+import { emitterService } from '@/services';
 
 export const ComposeEmail = ({ onClose, ...props }: ComposeEmailProps) => {
   const { className, ...restProps } = props;
@@ -21,9 +22,10 @@ export const ComposeEmail = ({ onClose, ...props }: ComposeEmailProps) => {
 
   const send = async (data: ComposeEmailFormValues) => {
     try {
-      await sendMessage({ createMessageDto: data }).unwrap();
+      const message = await sendMessage({ createMessageDto: data }).unwrap();
       await dispatch(getSentCountRefreshAction(user.email));
       notification.success({ message: NotificationConfig.message.SENT, placement: NotificationConfig.placement });
+      emitterService.emit('MESSAGE_SENT', message);
       onClose();
     } catch (e) {
       notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
