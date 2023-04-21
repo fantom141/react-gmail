@@ -1,7 +1,7 @@
 import { MessageListActions } from '@/features/MessageListActions';
 import { MessagePreviewListProps } from './types';
 import { useEffect, useMemo } from 'react';
-import { MessageControllerGetMessagesApiArg, useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
+import { MessageControllerGetMessagesApiArg, MessageDto, useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
 import { getPredefinedReqArgs } from './utils';
 import { MessagePreviewListSkeleton } from '@/features/MessagePreviewListSkeleton';
 import { MessageListEmpty } from '@/features/MessageListEmpty';
@@ -40,6 +40,11 @@ export const MessagePreviewList = ({
     onRefresh();
   };
 
+  const openMessage = (message: MessageDto) => {
+    onOpen(message);
+    !message.isRead && onManagePreferences(message, { isRead: true });
+  };
+
   return (
     <>
       {renderFilterElement(applyFilter)}
@@ -68,7 +73,7 @@ export const MessagePreviewList = ({
                 <MessagePreview
                   data={item}
                   isOpened={item.messageId === openedMessage?.messageId}
-                  onClick={() => onOpen(item)}
+                  onClick={() => openMessage(item)}
                   renderActionsElement={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
                     <MessageActions
                       isRead={isRead}
@@ -76,7 +81,7 @@ export const MessagePreviewList = ({
                       isTrash={isTrash}
                       isSpam={isSpam}
                       isDisplayed={cursorOver}
-                      onManagePreferences={prefs => onManagePreferences(messageId, prefs)}
+                      onManagePreferences={prefs => onManagePreferences(item, prefs)}
                     />
                   )}
                 />

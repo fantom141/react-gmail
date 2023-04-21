@@ -6,7 +6,7 @@ export interface MessagePreviewListProps {
   openedMessage: MessageDto;
   renderFilterElement: (change: (values: MessageControllerGetMessagesApiArg) => void) => ReactElement;
   onOpen: (v: MessageDto) => void;
-  onManagePreferences: (messageId: number, prefs: MessagePreferencesDto) => void;
+  onManagePreferences: (message: MessageDto, prefs: MessagePreferencesDto) => void;
   onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
   onRefresh?: () => void;
 }

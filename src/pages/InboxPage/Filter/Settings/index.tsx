@@ -1,4 +1,4 @@
-import { Button, DatePicker, Input, Row, Space } from 'antd';
+import { Button, Checkbox, DatePicker, Input, Row, Space } from 'antd';
 import { Controller } from 'react-hook-form';
 import React, { useEffect } from 'react';
 import { FormItem } from '@/components/FormItem';
@@ -49,6 +49,32 @@ export const Settings = ({ control, onApply, onReset }: SettingsProps) => {
               placeholder={['From', 'To']}
             />
           </FormItem>
+        )}
+      />
+
+      <Controller
+        name="isRead"
+        control={control}
+        render={({ field: { value, ...rest } }) => (
+          <Checkbox
+            {...rest}
+            checked={value}
+          >
+            Is Read
+          </Checkbox>
+        )}
+      />
+
+      <Controller
+        name="isUnread"
+        control={control}
+        render={({ field: { value, ...rest } }) => (
+          <Checkbox
+            {...rest}
+            checked={value}
+          >
+            Is Unread
+          </Checkbox>
         )}
       />
 

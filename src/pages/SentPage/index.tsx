@@ -1,5 +1,7 @@
-import { Thread } from '@/features/Thread';
-import { useDispatch } from 'react-redux';
+import { SplitPanels } from '@/components/SplitPanels';
+import { Scrollable } from '@/components/Scrollable';
+import { Header } from './Header';
+import { MessagePreviewList } from '@/features/MessagePreviewList';
 import {
   AppDispatch,
   decreaseFavouritesCountPatchAction,
@@ -18,23 +20,21 @@ import {
   increaseUnreadCountPatchAction,
   setInProgressAction,
 } from '@/store';
-import { SplitPanels } from '@/components/SplitPanels';
-import { MessagePreviewList } from '@/features/MessagePreviewList';
+import { Filter } from './Filter';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 import {
   MessageControllerGetMessagesApiArg,
   MessageDto,
   MessagePreferencesDto,
   useMessageControllerManagePreferencesMutation,
 } from '@/store/api/message-api';
-import { useContext, useEffect, useState } from 'react';
-import { Header } from './Header';
-import { Filter } from './Filter';
-import { AuthContext } from '@/context/AuthContext';
-import { Scrollable } from '@/components/Scrollable';
+import { useDispatch } from 'react-redux';
 import { notification } from 'antd';
 import { NotificationConfig } from '@/configs';
+import { Thread } from '@/features/Thread';
 
-export const InboxPage = () => {
+export const SentPage = () => {
   const { user } = useContext(AuthContext);
   const [listCachedArgs, setListCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [threadCachedArgs, setThreadCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
@@ -53,8 +53,7 @@ export const InboxPage = () => {
   };
 
   const refreshCounts = () => {
-    dispatch(getInboxCountRefreshAction(user.email));
-    dispatch(getUnreadCountRefreshAction(user.email));
+    dispatch(getSentCountRefreshAction(user.email));
   };
 
   const updatePreferences = async ({ messageId, sender, recipient }: MessageDto, prefs: MessagePreferencesDto) => {
@@ -134,7 +133,7 @@ export const InboxPage = () => {
           <Header />
 
           <MessagePreviewList
-            specificReqArgs={{ recipientEmail: user.email, isSpam: false, isTrash: false }}
+            specificReqArgs={{ senderEmail: user.email, isSpam: false, isTrash: false }}
             openedMessage={openedMessage}
             onOpen={message => setOpenedMessage(message)}
             onCachedApiArgs={setListCachedArgs}

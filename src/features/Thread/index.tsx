@@ -40,8 +40,11 @@ export const Thread = ({
   useEffect(() => {
     if (fulfilledTimeStamp && openedMessage.threadId === originalArgs.threadId) {
       const el = scrollableRef.current.scrollByIdAttr(`${openedMessage.messageId}`);
-      el.onanimationend = () => el.classList.remove(styles.opened);
-      el.classList.add(styles.opened);
+
+      if (messagesRes.content.length > 1) {
+        el.onanimationend = () => el.classList.remove(styles.opened);
+        el.classList.add(styles.opened);
+      }
     }
   }, [openedMessage.messageId, fulfilledTimeStamp]);
 
@@ -99,7 +102,7 @@ export const Thread = ({
                       isSpam={item.isSpam}
                       isTrash={item.isTrash}
                       isDisplayed
-                      onManagePreferences={prefs => onManagePreferences(item.messageId, prefs)}
+                      onManagePreferences={prefs => onManagePreferences(item, prefs)}
                     />
                   </>
                 }

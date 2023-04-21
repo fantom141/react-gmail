@@ -17,3 +17,9 @@
 textarea.ant-input {
   resize: none;
 }
+
+label.ant-checkbox-wrapper {
+  .ant-checkbox + span {
+    user-select: none;
+  }
+}

@@ -5,6 +5,8 @@ export const prepareFilterValuesToOutput = ({
   search,
   senderEmail,
   dateReceived,
+  isRead,
+  isUnread,
 }: InboxFilterValues): MessageControllerGetMessagesApiArg => {
   const [from, to] = dateReceived || [];
 
@@ -13,5 +15,6 @@ export const prepareFilterValuesToOutput = ({
     senderEmail,
     createdDateFrom: from ? from.format('YYYY-MM-DD') : undefined,
     createdDateTo: to ? to.format('YYYY-MM-DD') : undefined,
+    isRead: isRead || isUnread ? isRead || !isUnread : undefined,
   };
 };
