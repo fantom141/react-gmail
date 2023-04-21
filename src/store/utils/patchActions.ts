@@ -1,4 +1,4 @@
-import { enhancedApi as messageApi, MessageControllerGetMessagesApiArg, MessagePreferencesDto } from '@/store/api/message-api';
+import { enhancedApi as messageApi, MessageControllerGetMessagesApiArg } from '@/store/api/message-api';
 import { DraftControllerGetCountApiArg, enhancedApi as draftApi } from '@/store/api/draft-api';
 import {
   getDraftsCountQueryArgs,
@@ -7,7 +7,7 @@ import {
   getSentCountQueryArgs,
   getSpamCountQueryArgs,
   getTrashCountQueryArgs,
-  getUnreadCountQueryArgs,
+  getUnreadCountQueryArgs
 } from './queryArgs';
 
 const messageCountIncrease = (args: MessageControllerGetMessagesApiArg, count: number) => messageApi.util.updateQueryData('messageControllerGetCount', args, draft => draft + count);
@@ -29,20 +29,3 @@ export const increaseSpamCountPatchAction = (count: number = 1) => messageCountI
 export const decreaseSpamCountPatchAction = (count: number = 1) => messageCountDecrease(getSpamCountQueryArgs(), count);
 export const increaseTrashCountPatchAction = (count: number = 1) => messageCountIncrease(getTrashCountQueryArgs(), count);
 export const decreaseTrashCountPatchAction = (count: number = 1) => messageCountDecrease(getTrashCountQueryArgs(), count);
-
-export const getInboxAndSentListPatchAction = (messageId: number, prefs: MessagePreferencesDto, args: MessageControllerGetMessagesApiArg) =>
-  messageApi.util.updateQueryData('messageControllerGetMessages', args, draft => {
-    if (prefs.isFavourite != null || prefs.isRead != null) {
-      draft.content = draft.content.map(el => {
-        if (el.messageId === messageId) {
-          return { ...el, ...prefs };
-        }
-
-        return el;
-      });
-    }
-
-    if (prefs.isTrash != null || prefs.isSpam != null) {
-      draft.content = draft.content.filter(el => el.messageId !== messageId);
-    }
-  });
