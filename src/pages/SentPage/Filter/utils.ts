@@ -4,11 +4,11 @@ import { SentFilterValues } from './types';
 export const prepareFilterValuesToOutput = ({
   search,
   recipientEmail,
-  dateReceived,
+  dateSent,
   isRead,
   isUnread,
 }: SentFilterValues): MessageControllerGetMessagesApiArg => {
-  const [from, to] = dateReceived || [];
+  const [from, to] = dateSent || [];
 
   return {
     search,

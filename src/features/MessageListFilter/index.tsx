@@ -1,13 +1,31 @@
-import React, { forwardRef, Ref } from 'react';
+import React, { useRef } from 'react';
 import styles from './styles.module.scss';
 import { Controller } from 'react-hook-form';
-import { FormItem } from '@/components/FormItem';
+import { FormItem } from '@/components/Form/FormItem';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { ContentBlock } from '@/components/ContentBlock';
 import { MessageListFilterProps } from './types';
+import { Settings } from './Settings';
 
-export const MessageListFilter = forwardRef(({ control, onHandleSubmit, suffix }: MessageListFilterProps, ref: Ref<HTMLFormElement>) => {
+export const MessageListFilter = ({ control, onHandleSubmit, children, resetFn }: MessageListFilterProps) => {
+  const formRef = useRef<HTMLFormElement>();
+
+  const applySettings = () => formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+  const reset = () => {
+    resetFn();
+    applySettings();
+  };
+
+  const suffix = !children ? null : (
+    <Settings
+      onApply={applySettings}
+      onReset={reset}
+    >
+      {children}
+    </Settings>
+  );
+
   return (
     <ContentBlock
       skipVerticalIndent={true}
@@ -17,7 +35,7 @@ export const MessageListFilter = forwardRef(({ control, onHandleSubmit, suffix }
       <form
         onSubmit={onHandleSubmit}
         autoComplete="none"
-        ref={ref}
+        ref={formRef}
       >
         <Controller
           name="search"
@@ -37,4 +55,4 @@ export const MessageListFilter = forwardRef(({ control, onHandleSubmit, suffix }
       </form>
     </ContentBlock>
   );
-});
+};

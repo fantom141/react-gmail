@@ -1,50 +1,47 @@
-import { Button, Popover } from 'antd';
-import { ControlOutlined } from '@ant-design/icons';
-import { useForm } from 'react-hook-form';
-import { FilterProps, InboxFilterValues } from './types';
-import React, { useRef } from 'react';
-import { Settings } from './Settings';
+import { FilterProps } from './types';
 import { MessageListFilter } from '@/features/MessageListFilter';
+import { useForm } from 'react-hook-form';
+import { InboxFilterValues } from './types';
 import { prepareFilterValuesToOutput } from './utils';
+import { FormControlInput, FormControlDateRangePicker, FormControlCheckbox } from '@/components/Form';
 
 export const Filter = ({ onChange }: FilterProps) => {
   const { control, handleSubmit, reset } = useForm<InboxFilterValues>();
-  const formRef = useRef<HTMLFormElement>(null);
-
   const onSubmit = (val: InboxFilterValues) => onChange(prepareFilterValuesToOutput(val));
-  const applySettings = () => formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-  const resetForm = () => {
-    reset();
-    applySettings();
-  };
-
-  const settings = (
-    <Popover
-      placement="bottomRight"
-      trigger="click"
-      content={
-        <Settings
-          control={control}
-          onReset={resetForm}
-          onApply={applySettings}
-        />
-      }
-    >
-      <Button
-        type="text"
-        size="middle"
-        htmlType="button"
-        icon={<ControlOutlined />}
-      ></Button>
-    </Popover>
-  );
 
   return (
     <MessageListFilter
       control={control}
       onHandleSubmit={handleSubmit(onSubmit)}
-      suffix={settings}
-      ref={formRef}
-    />
+      resetFn={reset}
+    >
+      <>
+        <FormControlInput
+          control={control}
+          name="senderEmail"
+          label="Sender Email"
+          placeholder="example@provider.domain"
+        />
+
+        <FormControlDateRangePicker
+          control={control}
+          name="dateReceived"
+          label="Date Received"
+          placeholders={['From', 'To']}
+        />
+
+        <FormControlCheckbox
+          control={control}
+          name="isRead"
+          label="Is Read"
+        />
+
+        <FormControlCheckbox
+          control={control}
+          name="isUnread"
+          label="Is Unread"
+        />
+      </>
+    </MessageListFilter>
   );
 };
