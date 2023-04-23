@@ -37,7 +37,7 @@ export const MessageListActions = ({
       </Tooltip>
 
       <Tooltip
-        title={`Date received ${sortDir}`}
+        title={`Date ${sortDir}`}
         placement="bottom"
       >
         <Button

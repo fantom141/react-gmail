@@ -1,4 +1,4 @@
-import { MessageControllerGetMessagesApiArg, MessageDto } from '@/store/api/message-api';
+import { MessageControllerGetMessagesApiArg, MessageDto, MessagePreferencesDto } from '@/store/api/message-api';
 import { User } from 'firebase/auth';
 import { ReactElement } from 'react';
 
@@ -10,4 +10,5 @@ export interface PagePrimaryProps {
   filterRenderElement: (change: (values: MessageControllerGetMessagesApiArg) => void) => ReactElement;
   onRefresh: () => void;
   onMessageSent?: (message: MessageDto, listCachedArgs: MessageControllerGetMessagesApiArg) => void;
+  onPreferencesUpdate?: (prefs: MessagePreferencesDto, listCachedArgs: MessageControllerGetMessagesApiArg) => void;
 }

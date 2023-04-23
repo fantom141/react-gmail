@@ -41,6 +41,7 @@ export const PagePrimary = ({
   filterRenderElement,
   onRefresh,
   onMessageSent,
+  onPreferencesUpdate,
 }: PagePrimaryProps) => {
   const [listCachedArgs, setListCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
   const [threadCachedArgs, setThreadCachedArgs] = useState<MessageControllerGetMessagesApiArg>();
@@ -111,6 +112,8 @@ export const PagePrimary = ({
           dispatch(getUnreadCountRefreshAction(user.email));
         }
       }
+
+      onPreferencesUpdate && onPreferencesUpdate(prefs, listCachedArgs);
     } catch (e) {
       notification.error({ message: NotificationConfig.message.WENT_WRONG, placement: NotificationConfig.placement });
     } finally {

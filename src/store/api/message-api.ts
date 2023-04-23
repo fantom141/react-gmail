@@ -100,6 +100,7 @@ export type MessageDto = {
   subject?: string;
   content: string;
   createdAt: string;
+  updatedAt: string;
   threadId: number;
   sender: UserDto;
   recipient: UserDto;
