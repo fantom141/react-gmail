@@ -1,28 +1,4 @@
 .root {
-  position: relative;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  cursor: pointer;
-  transition: var(--motion-ease-in-out) var(--motion-duration-slow) background-color;
-
-  &:hover {
-    background: var(--color-primary-bg);
-  }
-
-  &.opened {
-    background: var(--color-primary-bg);
-
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 0.25rem;
-      background: var(--color-primary-border);
-    }
-  }
-
   &.unread:after {
     content: '';
     position: absolute;
@@ -33,60 +9,4 @@
     border-radius: 50%;
     background: var(--color-primary);
   }
-}
-
-.wrapper {
-  position: relative;
-  display: grid;
-  grid-template-areas:
-          'subject date-and-actions'
-          'sender sender'
-          'content content'
-;
-  grid-template-columns: 1fr max-content;
-  grid-gap: 0.125rem 0.5rem;
-  align-items: baseline;
-}
-
-.subject {
-  grid-area: subject;
-  margin-bottom: 0 !important;
-  font-size: 0.875rem !important;
-  max-width: calc(100% - 6.5rem);
-}
-
-.dateAndActions {
-  grid-area: date-and-actions;
-  position: relative;
-  font-size: 0.813rem !important;
-}
-
-.actions {
-  position: absolute;
-  top: -1px;
-  left: -0.125rem;
-  transform: translateX(calc(-100% - 0.5rem));
-}
-
-.date {
-  font-size: 13px;
-}
-
-.sender {
-  grid-area: sender;
-  width: max-content;
-
-  &Text {
-    font-size: 0.875rem !important;
-  }
-
-  &Chevron {
-    margin-left: 0.25rem;
-    font-size: 0.75rem;
-  }
-}
-
-.content {
-  grid-area: content;
-  font-size: 0.813rem !important;
 }

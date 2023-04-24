@@ -5,7 +5,7 @@ import { LayoutRoutes } from './routes';
 import { LayoutSider } from './LayoutSider';
 import { ComposeEmail } from '@/features/ComposeEmail';
 import { AuthTokenInitializer } from './AuthTokenInitializer';
-import { localStorageService } from '@/services';
+import { emitterService, localStorageService } from '@/services';
 import { LocalStorageKeys } from '@/configs';
 import { ProgressLine } from './ProgressLine';
 
@@ -13,7 +13,6 @@ const { Content } = Layout;
 
 export const LayoutContainer = () => {
   const [siderCollapsed, setSiderCollapsed] = useState(false);
-  const [composeEmailOpened, setComposeEmailOpened] = useState(false);
 
   useEffect(() => {
     const isCollapsed = Boolean(localStorageService.get(LocalStorageKeys.SIDER_IS_COLLAPSED));
@@ -36,7 +35,7 @@ export const LayoutContainer = () => {
         <LayoutSider
           collapsed={siderCollapsed}
           onCollapsedChange={() => changeCollapsedState(!siderCollapsed)}
-          onCompose={() => setComposeEmailOpened(true)}
+          onCompose={() => emitterService.emit('COMPOSE_OPENED')}
         />
 
         <Layout className={siderCollapsed ? styles.collapsed : styles.expanded}>
@@ -44,12 +43,7 @@ export const LayoutContainer = () => {
             <LayoutRoutes />
           </Content>
 
-          {composeEmailOpened && (
-            <ComposeEmail
-              className={styles.composeEmail}
-              onClose={() => setComposeEmailOpened(false)}
-            />
-          )}
+          <ComposeEmail className={styles.composeEmail} />
         </Layout>
       </Layout>
     </AuthTokenInitializer>

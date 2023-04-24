@@ -4,5 +4,5 @@ import { MessageDto } from '@/store/api/message-api';
 export interface MessagePreviewProps extends HTMLAttributes<HTMLDivElement> {
   data: MessageDto;
   isOpened: boolean;
-  renderActionsElement: (data: MessageDto, cursorOver: boolean) => ReactElement;
+  renderActionsElement: (cursorOver: boolean) => ReactElement;
 }

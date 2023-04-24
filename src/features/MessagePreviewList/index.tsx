@@ -25,7 +25,6 @@ export const MessagePreviewList = ({
 
   useEffect(() => {
     getMessages(predefineReqArgs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -76,12 +75,12 @@ export const MessagePreviewList = ({
                     data={item}
                     isOpened={item.messageId === openedMessage?.messageId}
                     onClick={() => openMessage(item)}
-                    renderActionsElement={({ messageId, isRead, isFavourite, isTrash, isSpam }, cursorOver) => (
+                    renderActionsElement={cursorOver => (
                       <MessageActions
-                        isRead={isRead}
-                        isFavourite={isFavourite}
-                        isTrash={isTrash}
-                        isSpam={isSpam}
+                        isRead={item.isRead}
+                        isFavourite={item.isFavourite}
+                        isTrash={item.isTrash}
+                        isSpam={item.isSpam}
                         isDisplayed={cursorOver}
                         onManagePreferences={prefs => onManagePreferences(item, prefs)}
                       />

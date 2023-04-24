@@ -3,7 +3,7 @@ import { ContentBlock } from '@/components/ContentBlock';
 
 export const MessageListEmpty = () => {
   return (
-    <ContentBlock>
+    <ContentBlock transparent>
       <Empty description="No Messages Found" />
     </ContentBlock>
   );

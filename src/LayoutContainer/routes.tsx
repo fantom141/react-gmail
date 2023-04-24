@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { InboxPage } from '@/pages/InboxPage';
 import { SentPage } from '@/pages/SentPage';
 import { AppRoutePath } from '@/configs';
-import { DraftsPage } from '@/pages/DraftstPage';
+import { DraftsPage } from '@/pages/DraftsPage';
 import { FavouritesPage } from '@/pages/FavouritesPage';
 import { SpamPage } from '@/pages/SpamPage';
 import { TrashPage } from '@/pages/TrashPage';

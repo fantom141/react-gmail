@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Divider, Input, Row, Space, theme } from 'antd';
 import { composeEmailFormValidationSchema } from '../utils';
@@ -13,7 +13,7 @@ const { useToken } = theme;
 const { TextArea } = Input;
 const { Compact } = Space;
 
-export const Form = ({ onSend, onSaveAsDraft, sendIsLoading, saveAsDraftIsLoading }: FormProps) => {
+export const Form = ({ draft, onSend, onSaveAsDraft, sendIsLoading, saveAsDraftIsLoading }: FormProps) => {
   const subjectClassNames = classnames(styles.control, styles.subject);
   const contentClassNames = classnames(styles.control, styles.content);
 
@@ -21,10 +21,16 @@ export const Form = ({ onSend, onSaveAsDraft, sendIsLoading, saveAsDraftIsLoadin
     token: { colorErrorBg },
   } = useToken();
 
-  const { control, handleSubmit, getValues } = useForm<ComposeEmailFormValues>({
+  const { control, handleSubmit, getValues, reset } = useForm<ComposeEmailFormValues>({
     mode: 'onBlur',
     resolver: yupResolver(composeEmailFormValidationSchema),
   });
+
+  useEffect(() => {
+    if (draft) {
+      reset(draft);
+    }
+  }, [draft?.draftId]);
 
   const onSubmit = (data: ComposeEmailFormValues) => {
     console.log(data);

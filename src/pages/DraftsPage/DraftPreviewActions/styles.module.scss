@@ -1,0 +1,10 @@
+@use 'src/assets/styles/settings' as *;
+
+.item {
+  opacity: 0;
+  @include fadeInOut();
+
+  &IsDisplayed {
+    opacity: 1;
+  }
+}

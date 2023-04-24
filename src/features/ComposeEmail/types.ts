@@ -1,8 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-export interface ComposeEmailProps extends HTMLAttributes<HTMLDivElement> {
-  onClose: () => void;
-}
+export interface ComposeEmailProps extends HTMLAttributes<HTMLDivElement> {}
 
 export type ComposeEmailFormValues = {
   email: string;
