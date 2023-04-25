@@ -167,6 +167,7 @@ export const PagePrimary = ({
             onCachedApiArgs={setThreadCachedArgs}
             onManagePreferences={updatePreferences}
             replyIsDisplayed
+            batchTrashIsDisplayed
             onReply={handleReply}
             onBatchTrash={batchTrash}
           />

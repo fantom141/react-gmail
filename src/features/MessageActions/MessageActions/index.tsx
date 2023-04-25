@@ -1,6 +1,5 @@
-import styles from './styles.module.scss';
-import classnames from 'classnames';
-import { Button, Space, Tooltip } from 'antd';
+import styles from '../MessageActionsWrapper/styles.module.scss';
+import { Button, Tooltip } from 'antd';
 import {
   CheckCircleOutlined,
   DeleteOutlined,
@@ -12,6 +11,8 @@ import {
   StarOutlined,
 } from '@ant-design/icons';
 import { MessageActionsProps } from './types';
+import { MessageActionsWrapper, MessageActionsWrapperRef } from '@/features/MessageActions';
+import { useMemo, useRef } from 'react';
 
 export const MessageActions = ({
   isRead,
@@ -22,9 +23,8 @@ export const MessageActions = ({
   onManagePreferences,
   ...rest
 }: MessageActionsProps) => {
-  const classNames = classnames(styles.item, {
-    [styles.itemIsDisplayed]: isDisplayed,
-  });
+  const wrapperRef = useRef<MessageActionsWrapperRef>();
+  const classNames = useMemo(() => wrapperRef?.current?.getItemClassNames(isDisplayed) || '', [isDisplayed, wrapperRef?.current]);
 
   const toReadIcon = (
     <Tooltip
@@ -82,7 +82,7 @@ export const MessageActions = ({
 
   const toTrashIcon = (
     <Tooltip
-      title="Delete"
+      title="Trash"
       placement="bottom"
     >
       <DeleteOutlined />
@@ -99,10 +99,9 @@ export const MessageActions = ({
   );
 
   return (
-    <Space
+    <MessageActionsWrapper
       {...rest}
-      onClick={e => e.stopPropagation()}
-      size={2}
+      ref={wrapperRef}
     >
       <Button
         type="text"
@@ -139,6 +138,6 @@ export const MessageActions = ({
           onClick={() => onManagePreferences({ isFavourite: !isFavourite })}
         ></Button>
       )}
-    </Space>
+    </MessageActionsWrapper>
   );
 };

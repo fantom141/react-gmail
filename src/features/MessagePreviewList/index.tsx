@@ -14,6 +14,7 @@ export const MessagePreviewList = ({
   specificReqArgs,
   openedMessage,
   renderFilterElement,
+  renderActionsElement,
   onOpen,
   onManagePreferences,
   onCachedApiArgs,
@@ -75,16 +76,20 @@ export const MessagePreviewList = ({
                     data={item}
                     isOpened={item.messageId === openedMessage?.messageId}
                     onClick={() => openMessage(item)}
-                    renderActionsElement={cursorOver => (
-                      <MessageActions
-                        isRead={item.isRead}
-                        isFavourite={item.isFavourite}
-                        isTrash={item.isTrash}
-                        isSpam={item.isSpam}
-                        isDisplayed={cursorOver}
-                        onManagePreferences={prefs => onManagePreferences(item, prefs)}
-                      />
-                    )}
+                    renderActionsElement={cursorOver =>
+                      renderActionsElement ? (
+                        renderActionsElement(item, cursorOver)
+                      ) : (
+                        <MessageActions
+                          isRead={item.isRead}
+                          isFavourite={item.isFavourite}
+                          isTrash={item.isTrash}
+                          isSpam={item.isSpam}
+                          isDisplayed={cursorOver}
+                          onManagePreferences={prefs => onManagePreferences(item, prefs)}
+                        />
+                      )
+                    }
                   />
                 )}
               ></List>

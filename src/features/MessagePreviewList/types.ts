@@ -9,4 +9,5 @@ export interface MessagePreviewListProps {
   onManagePreferences: (message: MessageDto, prefs: MessagePreferencesDto) => void;
   onCachedApiArgs: (args: MessageControllerGetMessagesApiArg) => void;
   onRefresh?: () => void;
+  renderActionsElement?: (item: MessageDto, cursorOver: boolean) => ReactElement;
 }

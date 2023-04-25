@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import { Header } from './Header';
 import { ThreadProps } from './types';
 import { MessageDto, useLazyMessageControllerGetMessagesQuery } from '@/store/api/message-api';
-import { Button, List } from 'antd';
+import { Button, List, Tooltip } from 'antd';
 import { useEffect, useRef } from 'react';
 import { getPredefinedReqArgs, getReplyPatchAction, THREAD_LIST_ID } from './utils';
 import { MessageDetails } from '@/features/MessageDetails';
@@ -19,6 +19,7 @@ export const Thread = ({
   specificReqArgs,
   openedMessage,
   replyIsDisplayed,
+  batchTrashIsDisplayed,
   onClose,
   onManagePreferences,
   onCachedApiArgs,
@@ -69,6 +70,7 @@ export const Thread = ({
         onClose={onClose}
         onPrint={() => print(document.getElementById(THREAD_LIST_ID))}
         onTrash={batchTrash}
+        batchTrashIsDisplayed={batchTrashIsDisplayed}
       />
 
       {isFetching || !messagesRes ? (
@@ -88,14 +90,18 @@ export const Thread = ({
                 isOpened={item.messageId === openedMessage.messageId}
                 renderActionsElement={
                   <>
-                    <Button
-                      size="small"
-                      type="text"
-                      icon={<PrinterOutlined />}
-                      className={styles.printMessage}
-                      onClick={() => print(document.getElementById(`${item.messageId}`))}
-                    />
-
+                    <Tooltip
+                      title="Print"
+                      placement="bottom"
+                    >
+                      <Button
+                        size="small"
+                        type="text"
+                        icon={<PrinterOutlined />}
+                        className={styles.printMessage}
+                        onClick={() => print(document.getElementById(`${item.messageId}`))}
+                      />
+                    </Tooltip>
                     <MessageActions
                       isRead={item.isRead}
                       isFavourite={item.isFavourite}
