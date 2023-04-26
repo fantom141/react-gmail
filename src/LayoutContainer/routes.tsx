@@ -1,11 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { InboxPage } from '@/pages/InboxPage';
-import { SentPage } from '@/pages/SentPage';
 import { AppRoutePath } from '@/configs';
-import { DraftsPage } from '@/pages/DraftsPage';
-import { FavouritesPage } from '@/pages/FavouritesPage';
-import { SpamPage } from '@/pages/SpamPage';
-import { TrashPage } from '@/pages/TrashPage';
+import { Page404 } from '@/pages/Page404';
+import { lazy, Suspense } from 'react';
+import { AppLoading } from '@/components/AppLoading';
+
+const InboxPage = lazy(() => import('@/pages/InboxPage').then(module => ({ default: module.InboxPage })));
+const SentPage = lazy(() => import('@/pages/SentPage').then(module => ({ default: module.SentPage })));
+const DraftsPage = lazy(() => import('@/pages/DraftsPage').then(module => ({ default: module.DraftsPage })));
+const FavouritesPage = lazy(() => import('@/pages/FavouritesPage').then(module => ({ default: module.FavouritesPage })));
+const SpamPage = lazy(() => import('@/pages/SpamPage').then(module => ({ default: module.SpamPage })));
+const TrashPage = lazy(() => import('@/pages/TrashPage').then(module => ({ default: module.TrashPage })));
 
 export const LayoutRoutes = () => {
   return (
@@ -21,27 +25,51 @@ export const LayoutRoutes = () => {
       />
       <Route
         path={AppRoutePath.INBOX}
-        element={<InboxPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <InboxPage />
+          </Suspense>
+        }
       />
       <Route
         path={AppRoutePath.SENT}
-        element={<SentPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <SentPage />
+          </Suspense>
+        }
       />
       <Route
         path={AppRoutePath.DRAFTS}
-        element={<DraftsPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <DraftsPage />
+          </Suspense>
+        }
       />
       <Route
         path={AppRoutePath.FAVOURITES}
-        element={<FavouritesPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <FavouritesPage />
+          </Suspense>
+        }
       />
       <Route
         path={AppRoutePath.SPAM}
-        element={<SpamPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <SpamPage />
+          </Suspense>
+        }
       />
       <Route
         path={AppRoutePath.TRASH}
-        element={<TrashPage />}
+        element={
+          <Suspense fallback={<AppLoading />}>
+            <TrashPage />
+          </Suspense>
+        }
       />
       <Route
         path="*"

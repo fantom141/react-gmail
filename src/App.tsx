@@ -1,13 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import React, { lazy, PropsWithChildren, Suspense } from 'react';
 import { AuthContext, AuthContextProvider } from '@/context/AuthContext';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import { LayoutContainer } from './LayoutContainer';
-import { LoginPage } from './pages/LoginPage';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { AppLoading } from '@/components/AppLoading';
 import { ThemeProvider } from '@/ThemeProvider';
+
+const LoginPage = lazy(() => import('@/pages/LoginPage').then(module => ({ default: module.LoginPage })));
 
 const ProtectedRoutes = ({ user }: PropsWithChildren<{ user: User }>) => {
   return user ? <Outlet /> : <Navigate to="/login" />;
@@ -38,7 +39,11 @@ export function App() {
                     <Route element={<AccessToAuthRoutes user={user} />}>
                       <Route
                         path="/login"
-                        element={<LoginPage />}
+                        element={
+                          <Suspense>
+                            <LoginPage />
+                          </Suspense>
+                        }
                       />
                     </Route>
                   </Routes>
