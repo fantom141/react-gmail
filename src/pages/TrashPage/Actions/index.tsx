@@ -1,12 +1,11 @@
-import { useMemo, useRef } from 'react';
-import { MessageActionsWrapper, MessageActionsWrapperRef } from '@/features/MessageActions';
+import { useMemo } from 'react';
+import { getActionItemClassNames, MessageActionsWrapper } from '@/features/MessageActions';
 import { Button, Tooltip } from 'antd';
 import { DeleteOutlined, InboxOutlined, MailOutlined, RollbackOutlined } from '@ant-design/icons';
 import { ActionsProps } from './types';
 
 export const Actions = ({ isRead, isDisplayed, onManagePreferences, onDelete, ...rest }: ActionsProps) => {
-  const wrapperRef = useRef<MessageActionsWrapperRef>();
-  const classNames = useMemo(() => wrapperRef?.current?.getItemClassNames(isDisplayed) || '', [isDisplayed, wrapperRef?.current]);
+  const classNames = useMemo(() => getActionItemClassNames(isDisplayed) || '', [isDisplayed]);
 
   const toReadIcon = (
     <Tooltip
@@ -36,10 +35,7 @@ export const Actions = ({ isRead, isDisplayed, onManagePreferences, onDelete, ..
   );
 
   return (
-    <MessageActionsWrapper
-      {...rest}
-      ref={wrapperRef}
-    >
+    <MessageActionsWrapper {...rest}>
       <Button
         type="text"
         size="small"

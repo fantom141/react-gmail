@@ -11,8 +11,8 @@ import {
   StarOutlined,
 } from '@ant-design/icons';
 import { MessageActionsProps } from './types';
-import { MessageActionsWrapper, MessageActionsWrapperRef } from '@/features/MessageActions';
-import { useMemo, useRef } from 'react';
+import { getActionItemClassNames, MessageActionsWrapper } from '@/features/MessageActions';
+import { useMemo } from 'react';
 
 export const MessageActions = ({
   isRead,
@@ -23,8 +23,7 @@ export const MessageActions = ({
   onManagePreferences,
   ...rest
 }: MessageActionsProps) => {
-  const wrapperRef = useRef<MessageActionsWrapperRef>();
-  const classNames = useMemo(() => wrapperRef?.current?.getItemClassNames(isDisplayed) || '', [isDisplayed, wrapperRef?.current]);
+  const classNames = useMemo(() => getActionItemClassNames(isDisplayed) || '', [isDisplayed]);
 
   const toReadIcon = (
     <Tooltip
@@ -99,10 +98,7 @@ export const MessageActions = ({
   );
 
   return (
-    <MessageActionsWrapper
-      {...rest}
-      ref={wrapperRef}
-    >
+    <MessageActionsWrapper {...rest}>
       <Button
         type="text"
         size="small"

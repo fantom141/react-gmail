@@ -1,18 +1,14 @@
 import { DraftPreviewActionsProps } from './types';
 import { Button, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { useMemo, useRef } from 'react';
-import { MessageActionsWrapper, MessageActionsWrapperRef } from '@/features/MessageActions';
+import { useMemo } from 'react';
+import { getActionItemClassNames, MessageActionsWrapper } from '@/features/MessageActions';
 
 export const DraftPreviewActions = ({ isDisplayed, onDelete, className, ...rest }: DraftPreviewActionsProps) => {
-  const wrapperRef = useRef<MessageActionsWrapperRef>();
-  const classNames = useMemo(() => wrapperRef?.current?.getItemClassNames(isDisplayed) || '', [isDisplayed, wrapperRef?.current]);
+  const classNames = useMemo(() => getActionItemClassNames(isDisplayed) || '', [isDisplayed]);
 
   return (
-    <MessageActionsWrapper
-      {...rest}
-      ref={wrapperRef}
-    >
+    <MessageActionsWrapper {...rest}>
       <Button
         {...rest}
         type="text"
