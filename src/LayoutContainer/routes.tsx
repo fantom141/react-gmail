@@ -43,6 +43,10 @@ export const LayoutRoutes = () => {
         path={AppRoutePath.TRASH}
         element={<TrashPage />}
       />
+      <Route
+        path="*"
+        element={<Page404 />}
+      />
     </Routes>
   );
 };

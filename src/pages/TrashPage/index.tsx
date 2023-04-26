@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import {
   AppDispatch,
   decreaseTrashCountPatchAction,
-  getSpamCountRefreshAction,
   getTrashCountRefreshAction,
   increaseFavouritesCountPatchAction,
   increaseInboxCountPatchAction,
