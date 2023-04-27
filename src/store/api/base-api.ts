@@ -12,6 +12,7 @@ const baseQuery = fetchBaseQuery({
     } = getState() as RootState;
 
     headers.set('Authorization', `Bearer ${token}`);
+    headers.set('ngrok-skip-browser-warning', 'anyValue');
     return headers;
   },
 });
