@@ -2,9 +2,10 @@ import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError 
 import { RootState } from '../store';
 import { syncAuthState } from '../auth';
 import { Mutex } from 'async-mutex';
+import { env } from '@/configs';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: env.API_URL,
   prepareHeaders: (headers, { getState }) => {
     const {
       auth: { token },
